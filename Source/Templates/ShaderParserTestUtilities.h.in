@@ -1,0 +1,27 @@
+/************************************************************************//**
+ * @file ShaderParserTestUtilities.h
+ * @author Sylvain Doremus
+ * @version 1.0
+ * @date 07/01/2014 18:26:13 PM
+ *
+ * @brief ShaderParserTest utilities
+ *
+ * @details This file contains all ShaderParserTest instructions
+ *
+ * @remarks Don't edit this generated file.
+ *          Modifications will be lost at next generation with CMake.
+ *          Edit the file ShaderParserTestPath.h.in and relaunch CMake.
+ *
+ ***************************************************************************/
+
+#ifndef __SHADER_PARSER_TEST_UTILITIES_H__
+#define __SHADER_PARSER_TEST_UTILITIES_H__
+
+#include "ShaderParserTestPrerequisites.h"
+
+BEGIN_NAMESPACE_SHADER_PARSER_TEST
+{
+}
+END_NAMESPACE_SHADER_PARSER_TEST
+
+#endif // __SHADER_PARSER_TEST_UTILITIES_H__
