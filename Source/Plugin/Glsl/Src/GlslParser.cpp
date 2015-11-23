@@ -17,7 +17,15 @@
 BEGIN_NAMESPACE_GLSL_PARSER
 {
 	CGlslParser::CGlslParser()
-	{ 
+	{
+	}
+
+	CGlslParser::~CGlslParser()
+	{
+	}
+
+	bool CGlslParser::Parse( String const & p_shader )
+	{
 		Rule digit = qi::standard::digit;
 
 		Rule nonzero_digit = qi::char_( '1' )
@@ -34,14 +42,14 @@ BEGIN_NAMESPACE_GLSL_PARSER
 
 		Rule hexadecimal_digit = qi::standard::xdigit;
 
-		Rule non_digit =  qi::ascii::alpha
+		Rule non_digit = qi::ascii::alpha
 			| qi::char_( '_' );
 
 		Rule identifier = non_digit
-			| (identifier >> non_digit)
-			| (identifier >> digit);
+			| ( identifier >> non_digit )
+			| ( identifier >> digit );
 
-		Rule ope =  qi::char_( '+' )
+		Rule ope = qi::char_( '+' )
 			| qi::char_( '-' )
 			| qi::char_( '*' )
 			| qi::char_( '/' );
@@ -58,7 +66,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		Rule octal_constant = qi::char_( '0' )
 			| ( octal_constant >> octal_digit );
 
-		Rule hexadecimal_constant =  qi::string( "0x" ) >> hexadecimal_digit
+		Rule hexadecimal_constant = qi::string( "0x" ) >> hexadecimal_digit
 			| qi::string( "0X" ) >> hexadecimal_digit
 			| hexadecimal_constant >> hexadecimal_digit;
 
@@ -227,14 +235,16 @@ BEGIN_NAMESPACE_GLSL_PARSER
 
 		Rule member_declaration = basic_type >> declarators;
 
+		Rule opt_qualifier = qi::char_( '\0' )
+			| qualifier;
+
+		Rule opt_name = qi::char_( '\0' )
+			| name;
+
 		Rule member_list = member_declaration
 			| member_declaration >> member_list;
 
 		Rule struct_definition = opt_qualifier >> qi::string( "string" ) >> opt_name >> { member_list } >> opt_declarators;
-	}
-
-	CGlslParser::~CGlslParser()
-	{
 	}
 }
 END_NAMESPACE_GLSL_PARSER

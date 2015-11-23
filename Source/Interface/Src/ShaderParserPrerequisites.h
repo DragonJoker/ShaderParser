@@ -44,15 +44,15 @@
 #include "ShaderParserMacros.h"
 
 #if defined( _WIN32 )
-#   ifdef ShaderParser_EXPORTS
-#        define ShaderParserExport __declspec ( dllexport )
-#   else
-#       if defined ( __MINGW32__ )
-#           define ShaderParserExport
-#       else
-#           define ShaderParserExport __declspec ( dllimport )
-#       endif
-#   endif
+#	ifdef ShaderParser_EXPORTS
+#		define ShaderParserExport __declspec ( dllexport )
+#	else
+#		if defined ( __MINGW32__ )
+#			define ShaderParserExport
+#		else
+#			define ShaderParserExport __declspec ( dllimport )
+#		endif
+#	endif
 #else
 #   define ShaderParserExport
 #endif
@@ -67,6 +67,8 @@ namespace ShaderParser
 	using TChar = char;
 	using String = std::basic_string< TChar >;
 	using StringStream = std::basic_stringstream< TChar >;
+	using OutputStream = std::basic_ostream< TChar >;
+	using InputStream = std::basic_istream< TChar >;
 	using Format = boost::basic_format< TChar >;
 	
 	using Rule = qi::rule< String::iterator, qi::space_type >;

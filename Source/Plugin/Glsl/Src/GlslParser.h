@@ -14,8 +14,7 @@
 
 #include "GlslParserPrerequisites.h"
 
-#include <ShaderParserPlugin.h>
-#include <ShaderParserKeywords.h>
+#include <ShaderParser.h>
 
 BEGIN_NAMESPACE_GLSL_PARSER
 {
@@ -31,6 +30,12 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		/** Destructor.
 		*/
 		virtual ~CGlslParser();
+
+		/** Parses a shader in a string.
+		@param[in] p_shader
+			The shader text.
+		*/
+		virtual bool Parse( String const & p_shader );
 	};
 
 } END_NAMESPACE_GLSL_PARSER
