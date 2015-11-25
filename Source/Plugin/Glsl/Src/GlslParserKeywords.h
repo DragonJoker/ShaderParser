@@ -22,14 +22,13 @@ BEGIN_NAMESPACE_GLSL_PARSER
 {
 	/** Class listing GLSL keywords
 	*/
-	class keywords_
+	class CKeywords
 		: public CParserKeywords< EKeyword >
 	{
 	public:
-		keywords_();
-		~keywords_();
-	}
-	keyword;
+		CKeywords();
+		~CKeywords();
+	};
 }
 END_NAMESPACE_GLSL_PARSER
 
