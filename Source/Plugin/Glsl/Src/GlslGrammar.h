@@ -31,8 +31,12 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		/** Destructor.
 		*/
 		virtual ~CGlslGrammar();
-	};
 
-} END_NAMESPACE_GLSL_PARSER
+		/** Creates the grammar
+		*/
+		static CShaderGrammar * Create();
+	};
+}
+END_NAMESPACE_GLSL_PARSER
 
 #endif // ___PLUGIN_GLSL_PARSER_H___

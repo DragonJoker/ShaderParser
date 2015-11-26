@@ -23,17 +23,17 @@ BEGIN_NAMESPACE_GLSL_PARSER
 	/** Glsl Parser factory class.
 		CObject factory used to manage Glsl Parser creation.
 	*/
-	class CFactoryGlslParser
-		: public CFactoryShaderParser
+	class CFactoryGlslGrammar
+		: public CFactoryShaderGrammar
 	{
 	public:
 		/** Default constructor.
 		*/
-		CFactoryGlslParser();
+		CFactoryGlslGrammar();
 
 		/** Destructor.
 		*/
-		virtual ~CFactoryGlslParser();
+		virtual ~CFactoryGlslGrammar();
 
 		/** Get the type of the factory.
 		@returns

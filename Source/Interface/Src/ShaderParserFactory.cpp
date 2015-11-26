@@ -7,7 +7,7 @@
 *
 * @brief ShaderParser factory class.
 *
-* @details CFactoryShaderParser is used to manage CShaderParser creation.
+* @details CFactoryShaderGrammar is used to manage CShaderParser creation.
 *
 ***************************************************************************/
 
@@ -17,23 +17,23 @@
 
 BEGIN_NAMESPACE_SHADER_PARSER
 {
-	CFactoryShaderParser::CFactoryShaderParser()
+	CFactoryShaderGrammar::CFactoryShaderGrammar()
 	{
 		// Empty
 	}
 
-	CFactoryShaderParser::~CFactoryShaderParser()
+	CFactoryShaderGrammar::~CFactoryShaderGrammar()
 	{
 		// Empty
 	}
 
-	void CFactoryShaderParser::Initialise()
+	void CFactoryShaderGrammar::Initialise()
 	{
 		RegisterServices();
 		RegisterObjectTypes();
 	}
 
-	void CFactoryShaderParser::RegisterCreatorFunction( const String & idKey, CreatorFunction classCreator )
+	void CFactoryShaderGrammar::RegisterCreatorFunction( const String & idKey, CreatorFunction classCreator )
 	{
 		auto && l_it = GetMapFactory()->find( idKey );
 
@@ -45,7 +45,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		GetMapFactory()->insert( std::pair< String, CreatorFunction >( idKey, classCreator ) );
 	}
 
-	CShaderParser * CFactoryShaderParser::CreateInstance( const String & idKey )
+	CShaderGrammar * CFactoryShaderGrammar::CreateInstance( const String & idKey )
 	{
 		auto && l_it = GetMapFactory()->find( idKey );
 

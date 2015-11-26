@@ -19,7 +19,7 @@
 BEGIN_NAMESPACE_GLSL_PARSER
 {
 	CPluginGlslParser::CPluginGlslParser()
-		: CPluginShaderParser( new CFactoryGlslParser() )
+		: CPluginShaderParser( new CFactoryGlslGrammar() )
 	{
 		// Empty
 	}

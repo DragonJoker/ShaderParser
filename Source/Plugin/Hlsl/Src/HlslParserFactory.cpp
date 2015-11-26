@@ -18,7 +18,7 @@
 BEGIN_NAMESPACE_HLSL_PARSER
 {
 	CFactoryHlslParser::CFactoryHlslParser()
-		: CFactoryShaderParser()
+		: CFactoryShaderGrammar()
 	{
 		// Empty
 	}

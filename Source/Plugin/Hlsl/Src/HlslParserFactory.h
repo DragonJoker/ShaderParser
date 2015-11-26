@@ -24,7 +24,7 @@ BEGIN_NAMESPACE_HLSL_PARSER
 		CObject factory used to manage Hlsl Parser creation.
 	*/
 	class CFactoryHlslParser
-		: public CFactoryShaderParser
+		: public CFactoryShaderGrammar
 	{
 	public:
 		/** Default constructor.

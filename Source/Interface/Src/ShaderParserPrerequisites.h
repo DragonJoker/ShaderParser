@@ -93,7 +93,7 @@ namespace ShaderParser
 	class CDynLib;
 	class CDynLibManager;
 	class CPluginManager;
-	class CFactoryShaderParser;
+	class CFactoryShaderGrammar;
 	class CPluginShaderParser;
 
 	/** Base class holding the system error handler
@@ -102,6 +102,7 @@ namespace ShaderParser
 
 	//
 	class CShaderParser;
+	class CShaderGrammar;
 	class CShaderParserException;
 
 	// Pointers

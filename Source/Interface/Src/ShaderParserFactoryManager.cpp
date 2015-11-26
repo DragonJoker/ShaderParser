@@ -30,7 +30,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 	{
 	}
 
-	void CFactoryManager::AddFactory( CFactoryShaderParser * p_factory )
+	void CFactoryManager::AddFactory( CFactoryShaderGrammar * p_factory )
 	{
 		m_factories.insert( std::make_pair( p_factory->GetType(), p_factory ) );
 
@@ -43,7 +43,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		}
 	}
 
-	void CFactoryManager::RemoveFactory( CFactoryShaderParser * factory )
+	void CFactoryManager::RemoveFactory( CFactoryShaderGrammar * factory )
 	{
 		auto && l_itFactory = m_factories.find( factory->GetType() );
 
@@ -66,16 +66,16 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		}
 	}
 
-	CShaderParser * CFactoryManager::CreateInstance( const String & p_factoryType, const String & p_objectType )
+	CShaderGrammar * CFactoryManager::CreateInstance( const String & p_factoryType, const String & p_objectType )
 	{
-		CShaderParser * l_object = NULL;
+		CShaderGrammar * l_object = NULL;
 
 		//!@remarks Find factory object.
 		auto && l_itFactory = m_factories.find( p_factoryType );
 
 		if ( l_itFactory != m_factories.end() )
 		{
-			CFactoryShaderParser * l_factory = l_itFactory->second;
+			CFactoryShaderGrammar * l_factory = l_itFactory->second;
 
 			if ( l_factory )
 			{
@@ -99,7 +99,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		return l_object;
 	}
 
-	CShaderParser * CFactoryManager::CreateInstance( const String & p_objectType )
+	CShaderGrammar * CFactoryManager::CreateInstance( const String & p_objectType )
 	{
 		//!@remarks Find factory type.
 		auto && l_itObject = m_objectFactories.find( p_objectType );

@@ -30,13 +30,13 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		@param factory
 			Object factory to add.
 		*/
-		ShaderParserExport virtual void AddFactory( CFactoryShaderParser * factory );
+		ShaderParserExport virtual void AddFactory( CFactoryShaderGrammar * factory );
 
 		/** Remove a factory object.
 		@param factory
 			Object factory to remove.
 		*/
-		ShaderParserExport virtual void RemoveFactory( CFactoryShaderParser * factory );
+		ShaderParserExport virtual void RemoveFactory( CFactoryShaderGrammar * factory );
 
 		/** Create a object instance with its given type.
 		@param factoryType
@@ -48,7 +48,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		@remarks
 			If the factory type \c type doesn't exist, a NULL be returned.
 		*/
-		ShaderParserExport CShaderParser * CreateInstance( const String & factoryType, const String & objectType );
+		ShaderParserExport CShaderGrammar * CreateInstance( const String & factoryType, const String & objectType );
 
 		/** Create a object instance with its given type.
 		@param objectType
@@ -58,7 +58,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		@remarks
 			If the factory type \c type doesn't exist, a NULL be returned.
 		*/
-		ShaderParserExport CShaderParser * CreateInstance( const String & objectType );
+		ShaderParserExport CShaderGrammar * CreateInstance( const String & objectType );
 
 		/** Retrieves the unique instance
 		*/
@@ -80,14 +80,14 @@ BEGIN_NAMESPACE_SHADER_PARSER
 	protected:
 		/** Get the Map where the construction info is stored.
 		*/
-		ShaderParserExport std::map< String, CFactoryShaderParser * > * GetMapFactories()
+		ShaderParserExport std::map< String, CFactoryShaderGrammar * > & GetMapFactories()
 		{
-			return &m_factories;
+			return m_factories;
 		}
 
 	protected:
 		//! Factories managing the created instances.
-		std::map< String, CFactoryShaderParser * > m_factories;
+		std::map< String, CFactoryShaderGrammar * > m_factories;
 		//! Manage the association between an object type and its factory.
 		std::map< String, String > m_objectFactories;
 	};

@@ -7,7 +7,7 @@
 *
 * @brief ShaderParser factory class.
 *
-* @details CFactoryShaderParser is used to manage CShaderParser creation.
+* @details CFactoryShaderGrammar is used to manage CShaderParser creation.
 *
 ***************************************************************************/
 
@@ -25,16 +25,16 @@ BEGIN_NAMESPACE_SHADER_PARSER
 	/** ShaderParser factory class.
 		CObject factory used to manage CShaderParser creation.
 	*/
-	class CFactoryShaderParser
+	class CFactoryShaderGrammar
 	{
 	public:
 		/** Default constructor.
 		*/
-		ShaderParserExport CFactoryShaderParser();
+		ShaderParserExport CFactoryShaderGrammar();
 
 		/** Destructor.
 		*/
-		ShaderParserExport virtual ~CFactoryShaderParser();
+		ShaderParserExport virtual ~CFactoryShaderGrammar();
 
 		/** Perform the factory initialization.
 		@remarks
@@ -58,7 +58,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 			return m_objTypes;
 		}
 
-		typedef CShaderParser * ( *CreatorFunction )( void );
+		typedef CShaderGrammar * ( *CreatorFunction )( void );
 		typedef std::map< String, CreatorFunction > MapFactory;
 		typedef MapFactory::iterator iterator; //!< Iterator on the map factory
 
@@ -112,7 +112,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 			}
 		@endcode
 		*/
-		ShaderParserExport CShaderParser * CreateInstance( const String & idKey );
+		ShaderParserExport CShaderGrammar * CreateInstance( const String & idKey );
 
 	protected:
 		/** Register creation functions to create new objects.

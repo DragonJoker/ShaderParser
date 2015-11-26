@@ -1,4 +1,4 @@
-project( ShaderParserTest )
+project( GlslParserTest )
 
 include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/Src
@@ -11,19 +11,20 @@ if( WIN32 )
 	)
 endif()
 
-configure_file( ${CMAKE_TEMPLATES_DIR}/ShaderParserTestUtilities.h.in ${CMAKE_CURRENT_BINARY_DIR}/ShaderParserTestUtilities.h NEWLINE_STYLE LF )
-
-set( PROJECT_DESC "ShaderParser Test" )
+set( PROJECT_DESC "GlslParser Test" )
 set( ${PROJECT_NAME}_VERSION_MAJOR	0 )
 set( ${PROJECT_NAME}_VERSION_MINOR	1 )
 set( ${PROJECT_NAME}_VERSION_BUILD	0 )
 
 set( BinsDependencies
 	${BinsDependencies}
-	ShaderParser
+	GlslParser
 )
 
 include_directories( ${CMAKE_CURRENT_BINARY_DIR} )
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../Src )
+
+find_package( Boost COMPONENTS unit_test_framework )
 
 if( BUILD_TESTS AND Boost_UNIT_TEST_FRAMEWORK_FOUND )
 	if ( MSVC )
@@ -35,23 +36,9 @@ if( BUILD_TESTS AND Boost_UNIT_TEST_FRAMEWORK_FOUND )
 		bin_dos
 		"${BinsDependencies}"
 		"${BinsDependencies};${BoostUnitTestLibraries};${MinLibraries};"
-		"ShaderParserTestPch.h"
-		"ShaderParserTestPch.cpp"
-		""
-		""
-		""
-		"${CMAKE_CURRENT_BINARY_DIR}/ShaderParserTestUtilities.h"
+		"GlslParserTestPch.h"
+		"GlslParserTestPch.cpp"
 	)
-
-	if( ${BUILD_GLSL_PLUGIN} )
-		add_dependencies( ${PROJECT_NAME} GlslParser )
-		set( ADDITIONAL_FLAGS ${ADDITIONAL_FLAGS} TESTING_PLUGIN_GLSL )
-	endif()
-
-	if( ${BUILD_HLSL_PLUGIN} )
-		add_dependencies( ${PROJECT_NAME} HlslParser )
-		set( ADDITIONAL_FLAGS ${ADDITIONAL_FLAGS} TESTING_PLUGIN_HLSL )
-	endif()
 
 	set( ADDITIONAL_FLAGS ${ADDITIONAL_FLAGS} BOOST_TEST_DYN_LINK )
 
@@ -59,7 +46,7 @@ if( BUILD_TESTS AND Boost_UNIT_TEST_FRAMEWORK_FOUND )
 	  set_target_properties( ${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS "${ADDITIONAL_FLAGS}" )
 	endif ()
 
-	set_property( TARGET ${PROJECT_NAME} PROPERTY FOLDER "Test" )
+	set_property( TARGET ${PROJECT_NAME} PROPERTY FOLDER "Plugin/GLSL" )
 	add_target_astyle( ${PROJECT_NAME} ".h;.hpp;.inl;.cpp" )
 
 	# Adding debug test
@@ -75,8 +62,4 @@ if( BUILD_TESTS AND Boost_UNIT_TEST_FRAMEWORK_FOUND )
 		COMMAND "${PROJECT_NAME}"
 		WORKING_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE}"
 	)
-
-	copy_dll( ${PROJECT_NAME} "${Boost_UNIT_TEST_FRAMEWORK_LIBRARY_DEBUG}" Debug )
-	copy_dll( ${PROJECT_NAME} "${Boost_UNIT_TEST_FRAMEWORK_LIBRARY_RELEASE}" Release )
-	copy_dll( ${PROJECT_NAME} "${Boost_UNIT_TEST_FRAMEWORK_LIBRARY_RELEASE}" RelWithDebInfo )
 endif()

@@ -1,5 +1,5 @@
 /************************************************************************//**
- * @file ShaderParserTestPrerequisites.h
+ * @file GlslParserTestPrerequisites.h
  * @author Sylvain Doremus
  * @version 1.0
  * @date 11/23/2015
@@ -7,20 +7,18 @@
  *
  * @brief ShaderParserTest prerequisite header.
  *
- * @details This file contains all ShaderParserTest prerequisite instructions.
+ * @details This file contains all GlslParserTest prerequisite instructions.
  *
  ***************************************************************************/
 
-#ifndef ___SHADER_PARSER_TEST_PREREQUISITES_H___
-#define ___SHADER_PARSER_TEST_PREREQUISITES_H___
+#ifndef ___GLSL_PARSER_TEST_PREREQUISITES_H___
+#define ___GLSL_PARSER_TEST_PREREQUISITES_H___
 
-#include <ShaderParserPrerequisites.h>
-//#include <ShaderParser.h>
-#include <ShaderParserStringUtils.h>
+#include <GlslParserPrerequisites.h>
 
-#define BEGIN_NAMESPACE_SHADER_PARSER_TEST   BEGIN_NAMESPACE_SHADER_PARSER { namespace Test
-#define NAMESPACE_SHADER_PARSER_TEST         NAMESPACE_SHADER_PARSER::Test
-#define END_NAMESPACE_SHADER_PARSER_TEST     } END_NAMESPACE_SHADER_PARSER
+#define BEGIN_NAMESPACE_GLSL_PARSER_TEST BEGIN_NAMESPACE_GLSL_PARSER { namespace Test
+#define NAMESPACE_GLSL_PARSER_TEST NAMESPACE_GLSL_PARSER::Test
+#define END_NAMESPACE_GLSL_PARSER_TEST } END_NAMESPACE_GLSL_PARSER
 
 #ifdef BOOST_STATIC_LIB
 #   define BOOST_TEST_MAIN
@@ -41,16 +39,15 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/detail/global_typedef.hpp>
 
-BEGIN_NAMESPACE_SHADER_PARSER
+BEGIN_NAMESPACE_GLSL_PARSER
 {
 	namespace Test
 	{
 		String InitialiseSingletons();
-		void LoadPlugins( const String & path, bool mySql, bool sqlite, bool odbcMySql, bool odbcMsSql, bool postgreSql );
+		void LoadPlugins( const String & path );
 		void UnloadPlugins();
-		CShaderGrammar * InstantiateShaderParser( const String & type );
 	}
 }
-END_NAMESPACE_SHADER_PARSER
+END_NAMESPACE_GLSL_PARSER
 
-#endif // ___SHADER_PARSER_TEST_PREREQUISITES_H___
+#endif // ___GLSL_PARSER_TEST_PREREQUISITES_H___

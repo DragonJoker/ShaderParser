@@ -25,3 +25,5 @@ add_target(
 set_property( TARGET GlslParser PROPERTY FOLDER "Plugin/GLSL" )
 add_target_astyle( GlslParser ".h;.hpp;.inl;.cpp" )
 set( Build "yes" PARENT_SCOPE )
+
+add_subdirectory( Test )

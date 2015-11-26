@@ -350,27 +350,27 @@ BEGIN_NAMESPACE_GLSL_PARSER
 
 		function_call = function_call_or_method;
 
-		integer_expression = expression;
+		integer_expression = expression.alias();
 	
-		postfix_expression = primary_expression
+    postfix_expression = primary_expression.alias()
 			| postfix_expression >> LEFT_BRACKET >> integer_expression >> RIGHT_BRACKET
 			| function_call
 			| postfix_expression >> DOT >> field_selection
 			| postfix_expression >> INC_OP
 			| postfix_expression >> DEC_OP;
 
-		function_identifier = type_specifier
+		function_identifier = type_specifier.alias()
 			| postfix_expression;
-
-		unary_expression = postfix_expression
-			| INC_OP >> unary_expression
-			| DEC_OP >> unary_expression
-			| unary_operator >> unary_expression;
 
 		unary_operator = PLUS
 			| DASH
 			| BANG
 			| TILDE;
+
+		unary_expression = postfix_expression
+			| INC_OP >> unary_expression
+			| DEC_OP >> unary_expression
+			| unary_operator >> unary_expression;
 
 		multiplicative_expression = unary_expression
 			| multiplicative_expression >> STAR >> unary_expression
@@ -414,7 +414,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 			| logical_or_expression >> OR_OP >> logical_xor_expression;
 
 		conditional_expression = logical_or_expression
-			| logical_or_expression >> QUESTION >> expression >> COLON >> assignment_expression;
+			| logical_or_expression >> QUESTION >> expression.alias() >> COLON >> assignment_expression.alias();
 
 		assignment_operator = EQUAL
 			| MUL_ASSIGN
@@ -446,8 +446,8 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		type_qualifier = single_type_qualifier
 			| type_qualifier >> single_type_qualifier;
 
-		fully_specified_type = type_specifier
-			| type_qualifier >> type_specifier;
+		fully_specified_type = type_specifier.alias()
+			| type_qualifier >> type_specifier.alias();
 
 		array_specifier = LEFT_BRACKET >> RIGHT_BRACKET
 			| LEFT_BRACKET >> constant_expression >> RIGHT_BRACKET
@@ -456,10 +456,10 @@ BEGIN_NAMESPACE_GLSL_PARSER
 
 		function_header = fully_specified_type >> identifier >> LEFT_PAREN;
 
-		parameter_declarator = type_specifier >> identifier
-			| type_specifier >> identifier >> array_specifier;
+		parameter_declarator = type_specifier.alias() >> identifier
+			| type_specifier.alias() >> identifier >> array_specifier;
 
-		parameter_type_specifier = type_specifier;
+		parameter_type_specifier = type_specifier.alias();
 
 		parameter_declaration = type_qualifier >> parameter_declarator
 			| parameter_declarator
@@ -474,15 +474,14 @@ BEGIN_NAMESPACE_GLSL_PARSER
 
 		function_prototype = function_declarator >> RIGHT_PAREN;
 
-		identifier_list = COMMA >> identifier
-			| identifier_list >> COMMA >> identifier;
+		identifier_list = identifier >> *( COMMA >> identifier );
 
 		initializer = assignment_expression
-			| LEFT_BRACE >> initializer_list >> RIGHT_BRACE
-			| LEFT_BRACE >> initializer_list >> COMMA >> RIGHT_BRACE;
+			| LEFT_BRACE >> initializer_list.alias() >> RIGHT_BRACE
+			| LEFT_BRACE >> initializer_list.alias() >> COMMA >> RIGHT_BRACE;
 
-		fully_specified_type = type_specifier
-			| type_qualifier >> type_specifier;
+		fully_specified_type = type_specifier.alias()
+			| type_qualifier >> type_specifier.alias();
 
 		single_declaration = fully_specified_type
 			| fully_specified_type >> identifier
@@ -502,15 +501,13 @@ BEGIN_NAMESPACE_GLSL_PARSER
 
 		declaration = function_prototype >> SEMICOLON
 			| init_declarator_list >> SEMICOLON
-			| PRECISION >> precision_qualifier >> type_specifier >> SEMICOLON
-			| type_qualifier >> identifier >> LEFT_BRACE >> struct_declaration_list >> RIGHT_BRACE >> SEMICOLON
-			| type_qualifier >> identifier >> LEFT_BRACE >> struct_declaration_list >> RIGHT_BRACE
+			| PRECISION >> precision_qualifier >> type_specifier.alias() >> SEMICOLON
+			| type_qualifier >> identifier >> LEFT_BRACE >> struct_declaration_list.alias() >> RIGHT_BRACE >> SEMICOLON
+			| type_qualifier >> identifier >> LEFT_BRACE >> struct_declaration_list.alias() >> RIGHT_BRACE
 			| identifier >> SEMICOLON
-			| type_qualifier >> identifier >> LEFT_BRACE >> struct_declaration_list >> RIGHT_BRACE
+			| type_qualifier >> identifier >> LEFT_BRACE >> struct_declaration_list.alias() >> RIGHT_BRACE
 			| identifier >> array_specifier >> SEMICOLON
-			| type_qualifier >> SEMICOLON
-			| type_qualifier >> identifier >> SEMICOLON
-			| type_qualifier >> identifier >> identifier_list >> SEMICOLON;
+			| type_qualifier >> -identifier_list >> SEMICOLON;
 
 		invariant_qualifier = INVARIANT;
 
@@ -528,8 +525,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 
 		precise_qualifier = PRECISE;
 
-		type_name_list = type_name
-			| type_name_list >> COMMA >> type_name;
+		type_name_list = type_name >> *( COMMA >> type_name );
 
 		storage_qualifier = CONST
 			| INOUT
@@ -549,8 +545,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 			| SUBROUTINE
 			| SUBROUTINE >> LEFT_PAREN >> type_name_list >> RIGHT_PAREN;
 
-		type_specifier = type_specifier_nonarray
-			| type_specifier_nonarray >> array_specifier;
+		type_specifier = type_specifier_nonarray.alias() >> -array_specifier;
 
 		single_type_qualifier = storage_qualifier
 			| layout_qualifier
@@ -568,8 +563,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		struct_declaration = type_specifier >> struct_declarator_list >> SEMICOLON
 			| type_qualifier >> type_specifier >> struct_declarator_list >> SEMICOLON;
 
-		struct_declaration_list = struct_declaration
-			| struct_declaration_list >> struct_declaration;
+		struct_declaration_list = +struct_declaration;
 
 		struct_specifier = STRUCT >> identifier >> LEFT_BRACE >> struct_declaration_list >> RIGHT_BRACE
 			| STRUCT >> LEFT_BRACE >> struct_declaration_list >> RIGHT_BRACE;
@@ -714,21 +708,21 @@ BEGIN_NAMESPACE_GLSL_PARSER
 			| struct_specifier
 			| type_name;
 
-		initializer_list = initializer
-			| initializer_list >> COMMA >> initializer;
+		initializer_list = initializer >> *( COMMA >> initializer );
 
 		declaration_statement = declaration;
 
 		compound_statement_no_new_scope = LEFT_BRACE >> RIGHT_BRACE
-			| LEFT_BRACE >> statement_list >> RIGHT_BRACE;
+			| LEFT_BRACE >> statement_list.alias() >> RIGHT_BRACE;
 
 		statement_no_new_scope = compound_statement_no_new_scope
-			| simple_statement;
+			| simple_statement.alias();
 
-		compound_statement = LEFT_BRACE >> -statement_list >> RIGHT_BRACE;
+		compound_statement = LEFT_BRACE >> RIGHT_BRACE
+			| LEFT_BRACE >> statement_list.alias() >> RIGHT_BRACE;
 
 		statement = compound_statement
-			| simple_statement;
+			| simple_statement.alias();
 
 		statement_list = statement
 			| statement_list >> statement;
@@ -749,16 +743,12 @@ BEGIN_NAMESPACE_GLSL_PARSER
 
 		switch_statement_list = -statement_list;
 
-		switch_statement = SWITCH >> LEFT_PAREN >> expression >> RIGHT_PAREN >> LEFT_BRACE >> switch_statement_list
-			| RIGHT_BRACE;
+		switch_statement = SWITCH >> LEFT_PAREN >> expression >> RIGHT_PAREN >> LEFT_BRACE >> switch_statement_list >> RIGHT_BRACE;
 
 		for_init_statement = expression_statement
 			| declaration_statement;
 
-		conditionopt = -condition;
-
-		for_rest_statement = conditionopt >> SEMICOLON
-			| conditionopt >> SEMICOLON >> expression;
+		for_rest_statement = -condition >> SEMICOLON >> -expression;
 
 		iteration_statement = WHILE >> LEFT_PAREN >> condition >> RIGHT_PAREN >> statement_no_new_scope
 			| DO >> statement >> WHILE >> LEFT_PAREN >> expression >> RIGHT_PAREN >> SEMICOLON
@@ -790,6 +780,11 @@ BEGIN_NAMESPACE_GLSL_PARSER
 
 	CGlslGrammar::~CGlslGrammar()
 	{
+	}
+
+	CShaderGrammar * CGlslGrammar::Create()
+	{
+		return new CGlslGrammar;
 	}
 }
 END_NAMESPACE_GLSL_PARSER

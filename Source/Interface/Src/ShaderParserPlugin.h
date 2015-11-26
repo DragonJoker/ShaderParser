@@ -27,7 +27,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		@param factory
 			The factory used to manage CShaderParser object creation.
 		*/
-		ShaderParserExport CPluginShaderParser( CFactoryShaderParser * factory );
+		ShaderParserExport CPluginShaderParser( CFactoryShaderGrammar * factory );
 
 		/** Destructor.
 		*/
@@ -83,7 +83,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 
 	protected:
 		//! ShaderParser object factory.
-		CFactoryShaderParser * _factory;
+		CFactoryShaderGrammar * _factory;
 		//! Plugin install state.
 		bool _installed;
 	};

@@ -14,27 +14,28 @@
 #include "GlslParserPch.h"
 
 #include "GlslParserFactory.h"
+#include "GlslGrammar.h"
 
 BEGIN_NAMESPACE_GLSL_PARSER
 {
-	CFactoryGlslParser::CFactoryGlslParser()
-		: CFactoryShaderParser()
+	CFactoryGlslGrammar::CFactoryGlslGrammar()
+		: CFactoryShaderGrammar()
 	{
 		// Empty
 	}
 
-	CFactoryGlslParser::~CFactoryGlslParser()
+	CFactoryGlslGrammar::~CFactoryGlslGrammar()
 	{
 		// Empty
 	}
 
-	void CFactoryGlslParser::RegisterServices()
+	void CFactoryGlslGrammar::RegisterServices()
 	{
-		///@remarks Register function for creation of a GlslParser object.
-		//RegisterCreatorFunction( GLSL_PARSER_TYPE, CGlslParser::Create );
+		///@remarks Register function for creation of a CGlslGrammar object.
+		RegisterCreatorFunction( GLSL_PARSER_TYPE, CGlslGrammar::Create );
 	}
 
-	void CFactoryGlslParser::RegisterObjectTypes()
+	void CFactoryGlslGrammar::RegisterObjectTypes()
 	{
 		m_objTypes.push_back( GLSL_PARSER_TYPE );
 	}

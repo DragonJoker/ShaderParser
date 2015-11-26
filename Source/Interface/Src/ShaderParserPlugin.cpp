@@ -24,7 +24,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 {
 	const String ERROR_DB_FACTORY_IS_NULL = STR( "ShaderParser factory is null" );
 
-	CPluginShaderParser::CPluginShaderParser( CFactoryShaderParser * factory )
+	CPluginShaderParser::CPluginShaderParser( CFactoryShaderGrammar * factory )
 		: _factory( factory )
 		, _installed( false )
 	{

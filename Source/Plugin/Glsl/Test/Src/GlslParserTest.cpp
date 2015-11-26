@@ -1,5 +1,5 @@
 /************************************************************************//**
- * @file ShaderParserTest.cpp
+ * @file GlslParserTest.cpp
  * @author Sylvain Doremus
  * @version 1.0
  * @date 11/23/2015
@@ -11,18 +11,18 @@
  *
  ***************************************************************************/
 
-#include "ShaderParserTestPch.h"
+#include "GlslParserTestPch.h"
 
-#include "ShaderParserTest.h"
-#include "ShaderParserStringUtilsTest.h"
-#include "ShaderParserTestPluginsStaticLoader.h"
+#include "GlslParserTest.h"
+#include "GlslParserTestPluginLoader.h"
+#include "GlslGrammarTest.h"
 
 #include <boost/test/unit_test.hpp>
 
 NAMESPACE_SHADER_PARSER::String g_path;
 
-std::unique_ptr< NAMESPACE_SHADER_PARSER_TEST::CShaderParserStringUtilsTest > g_databaseStringUtilsTest;
-std::unique_ptr< NAMESPACE_SHADER_PARSER_TEST::CTestPluginsLoader > g_pluginsLoader;
+std::unique_ptr< NAMESPACE_GLSL_PARSER_TEST::CGlslGrammarTest > g_grammarTest;
+std::unique_ptr< NAMESPACE_GLSL_PARSER_TEST::CGlslPluginLoader > g_pluginLoader;
 
 void Startup( char * arg )
 {
@@ -38,16 +38,16 @@ void Startup( char * arg )
 #else
 	NAMESPACE_SHADER_PARSER::CLogger::Initialise( NAMESPACE_SHADER_PARSER::ELogType_DEBUG );
 #endif
-	NAMESPACE_SHADER_PARSER::CLogger::SetFileName( g_path + STR( "ShaderParserTest.log" ) );
+	NAMESPACE_SHADER_PARSER::CLogger::SetFileName( g_path + STR( "GlslParserTest.log" ) );
 
-	g_databaseStringUtilsTest = std::make_unique< NAMESPACE_SHADER_PARSER_TEST::CShaderParserStringUtilsTest >();
-	g_pluginsLoader = std::make_unique< NAMESPACE_SHADER_PARSER_TEST::CTestPluginsLoader >();
+	g_grammarTest = std::make_unique< NAMESPACE_GLSL_PARSER_TEST::CGlslGrammarTest >();
+	g_pluginLoader = std::make_unique< NAMESPACE_GLSL_PARSER_TEST::CGlslPluginLoader >();
 }
 
 void Shutdown()
 {
-	g_pluginsLoader.reset();
-	g_databaseStringUtilsTest.reset();
+	g_pluginLoader.reset();
+	g_grammarTest.reset();
 	NAMESPACE_SHADER_PARSER::CLogger::Cleanup();
 }
 
@@ -61,7 +61,7 @@ boost::unit_test::test_suite * init_unit_test_suite( int argc, char * argv[] )
 {
 	Startup( argv[0] );
 
-	NAMESPACE_SHADER_PARSER_TEST::Tests_Creation();
+	NAMESPACE_GLSL_PARSER_TEST::Tests_Creation();
 
 	Shutdown();
 	//!@remarks Exit the test application.
@@ -82,7 +82,7 @@ int main( int argc, char * argv[] )
 	boost::unit_test::init_unit_test_func();
 
 	//!@remarks Master TS Execution.
-	boost::unit_test::unit_test_main( &NAMESPACE_SHADER_PARSER_TEST::boost_main_init_function, argc, argv );
+	boost::unit_test::unit_test_main( &NAMESPACE_GLSL_PARSER_TEST::boost_main_init_function, argc, argv );
 
 	Shutdown();
 
@@ -90,7 +90,7 @@ int main( int argc, char * argv[] )
 	return 0;
 }
 
-BEGIN_NAMESPACE_SHADER_PARSER_TEST
+BEGIN_NAMESPACE_GLSL_PARSER_TEST
 {
 	bool boost_main_init_function()
 	{
@@ -101,10 +101,10 @@ BEGIN_NAMESPACE_SHADER_PARSER_TEST
 		return true;
 	}
 }
-END_NAMESPACE_SHADER_PARSER_TEST
+END_NAMESPACE_GLSL_PARSER_TEST
 #endif
 
-BEGIN_NAMESPACE_SHADER_PARSER_TEST
+BEGIN_NAMESPACE_GLSL_PARSER_TEST
 {
 	void Tests_Creation()
 	{
@@ -112,7 +112,7 @@ BEGIN_NAMESPACE_SHADER_PARSER_TEST
 		TS_List.clear();
 
 		//!@remarks Create the TS' sequences
-		TS_List.push_back( g_databaseStringUtilsTest->Init_Test_Suite() );
+		TS_List.push_back( g_grammarTest->Init_Test_Suite() );
 
 #if defined( TESTING_PLUGIN_GLSL )
 #endif
@@ -151,29 +151,21 @@ BEGIN_NAMESPACE_SHADER_PARSER_TEST
 	}
 
 	static const String GLSL_PLUGIN = STR( "GlslParser" );
-	static const String HLSL_PLUGIN = STR( "HlslParser" );
 
-	void LoadPlugins( const String & path, bool p_glsl, bool p_hlsl )
+	void LoadPlugins( const String & path )
 	{
 		SPluginsConfig pluginsConfig;
 #if !defined( STATIC_LIB )
-		pluginsConfig.m_glsl = std::make_unique< CPluginConfig >( p_glsl, path, GLSL_PLUGIN );
-		pluginsConfig.m_hlsl = std::make_unique< CPluginConfig >( p_hlsl, path, HLSL_PLUGIN );
+		pluginsConfig.m_glsl = std::make_unique< CPluginConfig >( true, CPluginManager::Instance().GetPluginsPath() + path, GLSL_PLUGIN );
 #else
-		pluginsConfig.m_glsl = std::make_unique< CPluginConfig< GLSL::CShaderParserPluginGlsl > >( p_glsl );
-		pluginsConfig.m_hlsl = std::make_unique< CPluginConfig< HLSL::CShaderParserPluginHlsl > >( p_hlsl );
+		pluginsConfig.m_glsl = std::make_unique< CPluginConfig< GLSL::CShaderParserPluginGlsl > >( true );
 #endif
-		g_pluginsLoader->Load( std::move( pluginsConfig ) );
+		g_pluginLoader->Load( std::move( pluginsConfig ) );
 	}
 
 	void UnloadPlugins()
 	{
-		g_pluginsLoader->Unload();
-	}
-
-	CShaderGrammar * InstantiateShaderParser( const String & type )
-	{
-		return static_cast< CShaderGrammar * >( CFactoryManager::Instance().CreateInstance( type ) );
+		g_pluginLoader->Unload();
 	}
 }
-END_NAMESPACE_SHADER_PARSER_TEST
+END_NAMESPACE_GLSL_PARSER_TEST

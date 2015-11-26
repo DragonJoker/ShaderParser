@@ -48,6 +48,8 @@ set( Boost_USE_STATIC_LIBS OFF )
 set( Boost_USE_STATIC_RUNTIME OFF )
 set( Boost_USE_MULTITHREADED ON )
 
+option( BUILD_TESTS "Build test applications" ON )
+
 find_package( Boost 1.49 REQUIRED date_time locale filesystem system )
 
 #--------------------------------------------------------------------------------------------------
@@ -91,6 +93,23 @@ if( Boost_FOUND )
 	SET( BinsDependencies "" )
 
 	set( SHADER_PARSER_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR} )
+
+	if ( BUILD_TESTS )
+		find_package( Boost 1.49 COMPONENTS unit_test_framework )
+		if( Boost_UNIT_TEST_FRAMEWORK_FOUND )
+			#Boost unit test Libs
+			set( BoostUnitTestLibraries "")
+			FOREACH(Lib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+				if (BoostUnitTestLibraries)
+					set(BoostUnitTestLibraries "${BoostUnitTestLibraries}|${Lib}")
+				else()
+					set(BoostUnitTestLibraries "${Lib}")
+				endif()
+			ENDFOREACH()
+		else()
+			message( STATUS "Tests can't be built (missing Boost)" )
+		endif ()
+	endif ()
 
 	add_subdirectory( Interface )
 	add_subdirectory( Plugin )
