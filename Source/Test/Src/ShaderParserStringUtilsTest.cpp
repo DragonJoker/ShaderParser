@@ -28,7 +28,7 @@ BEGIN_NAMESPACE_SHADER_PARSER_TEST
 	boost::unit_test::test_suite * CShaderParserStringUtilsTest::Init_Test_Suite()
 	{
 		//!@remarks Create the internal TS instance.
-		testSuite = new boost::unit_test::test_suite( "CShaderParserStringUtilsTest" );
+		testSuite = new boost::unit_test::test_suite( "CShaderParserStringUtilsTest", __FILE__, __LINE__ );
 
 		//!@remarks Add the TC to the internal TS.
 		testSuite->add( BOOST_TEST_CASE( std::bind( &CShaderParserStringUtilsTest::TestCase_StringUtilsIsUpperIsLower, this ) ) );

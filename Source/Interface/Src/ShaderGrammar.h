@@ -12,28 +12,36 @@
 #ifndef ___SHADER_PARSER_H___
 #define ___SHADER_PARSER_H___
 
-#include "ShaderParserPrerequisites.h"
+#include "EToken.h"
 
 BEGIN_NAMESPACE_SHADER_PARSER
 {
 	/** Class defining a shader parser.
 	*/
-	class CShaderParser
+	class CShaderGrammar
+		: public Grammar
 	{
 	public:
 		/** Default constructor.
 		*/
-		ShaderParserExport CShaderParser();
+		ShaderParserExport CShaderGrammar();
 
 		/** Destructor.
 		*/
-		ShaderParserExport virtual ~CShaderParser();
+		ShaderParserExport virtual ~CShaderGrammar();
 
-		/** Parses a shader in a string.
-		@param[in] p_shader
-			The shader text.
-		*/
-		ShaderParserExport virtual bool Parse( String const & p_shader ) = 0;
+	protected:
+		Rule identifier;
+		Rule digit_sequence;
+		Rule integer_constant;
+		Rule uinteger_constant;
+		Rule floating_suffix;
+		Rule exponent_part;
+		Rule fractional_constant;
+		Rule floating_constant;
+		Rule double_constant;
+		Rule bool_constant;
+		Rule translation_unit;
 	};
 
 } END_NAMESPACE_SHADER_PARSER

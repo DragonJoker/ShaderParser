@@ -16,13 +16,15 @@
 
 #include "GlslParserPrerequisites.h"
 
+#include <EToken.h>
+
 BEGIN_NAMESPACE_GLSL_PARSER
 {
 	/** Enumeration of supported GLSL keywords.
 	*/
 	typedef enum EKeyword
 	{
-		EKeyword_ATTRIBUTE,
+		EKeyword_ATTRIBUTE = EToken_COUNT,
 		EKeyword_CONST,
 		EKeyword_UNIFORM,
 		EKeyword_VARYING,
@@ -184,68 +186,9 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		EKeyword_IIMAGE2DMS_ARRAY,
 		EKeyword_UIMAGE2DMS_ARRAY,
 		EKeyword_STRUCT,
-
-		EKeyword_IDENTIFIER,
-		EKeyword_TYPE_NAME,
-		EKeyword_FLOAT_CONSTANT,
-		EKeyword_DOUBLE_CONSTANT,
-		EKeyword_INT_CONSTANT,
-		EKeyword_UINT_CONSTANT,
-		EKeyword_BOOL_CONSTANT,
-		EKeyword_FIELD_SELECTION,
-		EKeyword_LEFT_OP,
-		EKeyword_RIGHT_OP,
-		EKeyword_INC_OP,
-		EKeyword_DEC_OP,
-		EKeyword_LE_OP,
-		EKeyword_GE_OP,
-		EKeyword_EQ_OP,
-		EKeyword_NE_OP,
-		EKeyword_AND_OP,
-		EKeyword_OR_OP,
-		EKeyword_XOR_OP,
-		EKeyword_MUL_ASSIGN,
-		EKeyword_DIV_ASSIGN,
-		EKeyword_ADD_ASSIGN,
-		EKeyword_MOD_ASSIGN,
-		EKeyword_LEFT_ASSIGN,
-		EKeyword_RIGHT_ASSIGN,
-		EKeyword_AND_ASSIGN,
-		EKeyword_XOR_ASSIGN,
-		EKeyword_OR_ASSIGN,
-		EKeyword_SUB_ASSIGN,
-
-		EKeyword_LEFT_PAREN,
-		EKeyword_RIGHT_PAREN,
-		EKeyword_LEFT_BRACKET,
-		EKeyword_RIGHT_BRACKET,
-		EKeyword_LEFT_BRACE,
-		EKeyword_RIGHT_BRACE,
-		EKeyword_DOT,
-		EKeyword_COMMA,
-		EKeyword_COLON,
-		EKeyword_EQUAL,
-		EKeyword_SEMICOLON,
-		EKeyword_BANG,
-		EKeyword_DASH,
-		EKeyword_TILDE,
-		EKeyword_PLUS,
-		EKeyword_STAR,
-		EKeyword_SLASH,
-		EKeyword_PERCENT,
-		EKeyword_LEFT_ANGLE,
-		EKeyword_RIGHT_ANGLE,
-		EKeyword_VERTICAL_BAR,
-		EKeyword_CARET,
-		EKeyword_AMPERSAND,
-		EKeyword_QUESTION,
-
-		EKeyword_INVARIANT,
-		EKeyword_PRECISE,
 		EKeyword_HIGH_PRECISION,
 		EKeyword_MEDIUM_PRECISION,
 		EKeyword_LOW_PRECISION,
-		EKeyword_PRECISION,
 	}	EKeyword;
 }
 END_NAMESPACE_GLSL_PARSER

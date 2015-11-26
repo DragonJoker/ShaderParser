@@ -12,7 +12,7 @@
 #ifndef ___SHADER_PARSER_KEYWORDS_H___
 #define ___SHADER_PARSER_KEYWORDS_H___
 
-#include "ShaderParserPrerequisites.h"
+#include "EToken.h"
 
 BEGIN_NAMESPACE_SHADER_PARSER
 {

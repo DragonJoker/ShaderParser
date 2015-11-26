@@ -14,28 +14,23 @@
 
 #include "GlslParserPrerequisites.h"
 
-#include <ShaderParser.h>
+#include <ShaderGrammar.h>
 
 BEGIN_NAMESPACE_GLSL_PARSER
 {
 	/** Class defining a GLSL parser.
 	*/
-	class CGlslParser
+	class CGlslGrammar
+		: public CShaderGrammar
 	{
 	public:
 		/** Default constructor.
 		*/
-		CGlslParser();
+		CGlslGrammar();
 
 		/** Destructor.
 		*/
-		virtual ~CGlslParser();
-
-		/** Parses a shader in a string.
-		@param[in] p_shader
-			The shader text.
-		*/
-		virtual bool Parse( String const & p_shader );
+		virtual ~CGlslGrammar();
 	};
 
 } END_NAMESPACE_GLSL_PARSER
