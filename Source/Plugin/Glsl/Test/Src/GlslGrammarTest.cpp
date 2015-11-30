@@ -54,6 +54,16 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 
 		auto l_grammar = CFactoryManager::Instance().CreateInstance( GLSL_PARSER_TYPE );
 
+		std::string l_shader =
+		"void main(void)\n"
+		"{\n"
+		//"	vec4 a = gl_Vertex;\n"
+		//"	a.x = a.x * 0.5;\n"
+		//"	a.y = a.y * 0.5;\n"
+		//"	gl_Position = gl_ModelViewProjectionMatrix * a;\n"
+		"}";
+
+		qi::phrase_parse( l_shader.begin(), l_shader.end(), *l_grammar, qi::space_type() );
 		delete l_grammar;
 
 		UnloadPlugins();
