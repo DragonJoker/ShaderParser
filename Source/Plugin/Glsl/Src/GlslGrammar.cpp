@@ -15,6 +15,8 @@
 #include "GlslParserKeywords.h"
 #include "GlslParserBasicType.h"
 
+#include <ShaderParserLogger.h>
+
 #if defined( VOID )
 #	undef VOID
 #endif
@@ -35,6 +37,71 @@ BEGIN_NAMESPACE_GLSL_PARSER
 {
 	namespace
 	{
+		void on_function_prototype()
+		{
+			CLogger::LogDebug( "function_definition --> on_function_prototype compound_statement_no_new_scope" );
+		}
+
+		void on_fully_specified_type()
+		{
+			CLogger::LogDebug( "fully_specified_type" );
+		}
+
+		void on_declaration_statement()
+		{
+			CLogger::LogDebug( "simple_statement --> declaration_statement" );
+		}
+
+		void on_expression_statement()
+		{
+			CLogger::LogDebug( "simple_statement --> expression_statement" );
+		}
+
+		void on_selection_statement()
+		{
+			CLogger::LogDebug( "simple_statement --> selection_statement" );
+		}
+
+		void on_switch_statement()
+		{
+			CLogger::LogDebug( "simple_statement --> switch_statement" );
+		}
+
+		void on_case_label()
+		{
+			CLogger::LogDebug( "simple_statement --> case_label" );
+		}
+
+		void on_iteration_statement()
+		{
+			CLogger::LogDebug( "simple_statement --> iteration_statement" );
+		}
+
+		void on_jump_statement()
+		{
+			CLogger::LogDebug( "simple_statement --> jump_statement" );
+		}
+
+		void on_statement()
+		{
+			CLogger::LogDebug( "statement_list --> +statement" );
+		}
+
+		void on_function_definition()
+		{
+			CLogger::LogDebug( "external_declaration --> function_definition" );
+		}
+
+		void on_declaration()
+		{
+			CLogger::LogDebug( "external_declaration --> declaration" );
+		}
+
+		void on_external_declaration()
+		{
+			CLogger::LogDebug( "translation_unit --> +external_declaration" );
+		}
+
 		static const Rule VOID( "void", "VOID" );
 		static const Rule FLOAT( "float", "FLOAT" );
 		static const Rule DOUBLE( "double", "DOUBLE" );
@@ -186,9 +253,6 @@ BEGIN_NAMESPACE_GLSL_PARSER
 	}
 
 	CGlslGrammar::CGlslGrammar()
-		: expression_grammar( expression )
-		, declaration_grammar( declaration )
-		, function_grammar( function_definition )
 	{
 		variable_identifier = identifier;
 		variable_identifier.name( "variable_identifier" );
@@ -214,13 +278,18 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		function_call = function_call_or_method;
 		function_call.name( "function_call" );
 
-		integer_expression = expression_grammar;
+		integer_expression = expression.alias();
 		integer_expression.name( "integer_expression" );
-	
-    postfix_expression = primary_expression.alias()
-			| ( postfix_expression >> LEFT_BRACKET >> integer_expression >> RIGHT_BRACKET )
-			| function_call
-			| ( postfix_expression >> ( ( DOT >> field_selection ) | INC_OP | DEC_OP ) );
+
+		postfix_expression_start = primary_expression.alias()
+			| function_call;
+		postfix_expression_start.name( "postfix_expression_start" );
+
+		postfix_expression_rest = ( LEFT_BRACKET >> integer_expression >> RIGHT_BRACKET )
+			| ( ( DOT >> field_selection ) | INC_OP | DEC_OP );
+		postfix_expression_rest.name( "postfix_expression_rest" );
+
+		postfix_expression = postfix_expression_start >> *postfix_expression_rest;
 		postfix_expression.name( "postfix_expression" );
 
 		function_identifier = type_specifier.alias()
@@ -237,40 +306,40 @@ BEGIN_NAMESPACE_GLSL_PARSER
 			| ( INC_OP | DEC_OP | unary_operator ) >> unary_expression;
 		unary_expression.name( "unary_expression" );
 
-		multiplicative_expression = unary_expression >> *( ( STAR | SLASH | PERCENT ) >> unary_expression );
+		multiplicative_expression = unary_expression >> -( ( STAR | SLASH | PERCENT ) >> multiplicative_expression );
 		multiplicative_expression.name( "multiplicative_expression" );
 
-		additive_expression = multiplicative_expression >> *( ( PLUS | DASH ) >> additive_expression );
+		additive_expression = multiplicative_expression >> -( ( PLUS | DASH ) >> additive_expression );
 		additive_expression.name( "additive_expression" );
 
-		shift_expression = additive_expression >> *( ( LEFT_OP | RIGHT_OP ) >> shift_expression );
+		shift_expression = additive_expression >> -( ( LEFT_OP | RIGHT_OP ) >> shift_expression );
 		shift_expression.name( "shift_expression" );
 
-		relational_expression = shift_expression >> *( ( LEFT_ANGLE | RIGHT_ANGLE | LE_OP | GE_OP ) >> relational_expression );
+		relational_expression = shift_expression >> -( ( LEFT_ANGLE | RIGHT_ANGLE | LE_OP | GE_OP ) >> relational_expression );
 		relational_expression.name( "relational_expression" );
 
-		equality_expression = relational_expression >> *( ( EQ_OP | NE_OP ) >> equality_expression );
+		equality_expression = relational_expression >> -( ( EQ_OP | NE_OP ) >> equality_expression );
 		equality_expression.name( "equality_expression" );
 
-		and_expression = equality_expression >> *( AMPERSAND >> and_expression );
+		and_expression = equality_expression >> -( AMPERSAND >> and_expression );
 		and_expression.name( "and_expression" );
 
-		exclusive_or_expression = and_expression >> *( CARET >> exclusive_or_expression );
+		exclusive_or_expression = and_expression >> -( CARET >> exclusive_or_expression );
 		exclusive_or_expression.name( "exclusive_or_expression" );
 
-		inclusive_or_expression = exclusive_or_expression >> *( VERTICAL_BAR >> exclusive_or_expression );
+		inclusive_or_expression = exclusive_or_expression >> -( VERTICAL_BAR >> inclusive_or_expression );
 		inclusive_or_expression.name( "inclusive_or_expression" );
 
-		logical_and_expression = inclusive_or_expression >> *( AND_OP >> logical_and_expression );
+		logical_and_expression = inclusive_or_expression >> -( AND_OP >> logical_and_expression );
 		logical_and_expression.name( "logical_and_expression" );
 
-		logical_xor_expression = logical_and_expression >> *( XOR_OP >> logical_xor_expression );
+		logical_xor_expression = logical_and_expression >> -( XOR_OP >> logical_xor_expression );
 		logical_xor_expression.name( "logical_xor_expression" );
 
-		logical_or_expression = logical_xor_expression >> ( OR_OP >> logical_or_expression );
+		logical_or_expression = logical_xor_expression >> -( OR_OP >> logical_or_expression );
 		logical_or_expression.name( "logical_or_expression" );
 
-		conditional_expression = logical_or_expression >> +( QUESTION >> expression_grammar >> COLON >> assignment_expression.alias() );
+		conditional_expression = logical_or_expression >> -( QUESTION >> expression.alias() >> COLON >> assignment_expression.alias() );
 		conditional_expression.name( "conditional_expression" );
 
 		assignment_operator = EQUAL
@@ -299,7 +368,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 			| floating_constant
 			| bool_constant
 			| double_constant
-			| LEFT_PAREN >> expression_grammar >> RIGHT_PAREN;
+			| LEFT_PAREN >> expression >> RIGHT_PAREN;
 		primary_expression.name( "primary_expression" );
 	
 		constant_expression = conditional_expression;
@@ -314,7 +383,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		array_specifier = LEFT_BRACKET >> -constant_expression >> RIGHT_BRACKET >> -array_specifier;
 		array_specifier.name( "array_specifier" );
 
-		function_header = fully_specified_type >> identifier >> LEFT_PAREN;
+		function_header = fully_specified_type[&on_fully_specified_type] >> identifier >> LEFT_PAREN;
 		function_header.name( "function_header" );
 
 		parameter_declarator = type_specifier.alias() >> identifier >> -array_specifier;
@@ -326,10 +395,10 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		parameter_declaration = -type_qualifier >> ( parameter_declarator | parameter_type_specifier );
 		parameter_declaration.name( "parameter_declaration" );
 
-		function_header_with_parameters = function_header >> parameter_declaration >> ( COMMA >> parameter_declaration );
+		function_header_with_parameters = function_header;
 		function_header_with_parameters.name( "function_header_with_parameters" );
 
-		function_declarator = function_header | function_header_with_parameters;
+		function_declarator = function_header >> -( parameter_declaration >> *( COMMA >> parameter_declaration ) );
 		function_declarator.name( "function_declarator" );
 
 		function_prototype = function_declarator >> RIGHT_PAREN;
@@ -345,11 +414,13 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		fully_specified_type = -type_qualifier >> type_specifier.alias();
 		fully_specified_type.name( "fully_specified_type" );
 
-		single_declaration = fully_specified_type >> -( identifier >> -array_specifier >> -( EQUAL >> initializer ) );
+		declaration_identifier = identifier >> -array_specifier >> -( EQUAL >> initializer );
+		declaration_identifier.name( "declaration_identifier" );
+
+		single_declaration = fully_specified_type[&on_fully_specified_type] >> -declaration_identifier;
 		single_declaration.name( "single_declaration" );
 
-		init_declarator_list = single_declaration
-			| ( init_declarator_list >> COMMA >> identifier >> -array_specifier >> -( EQUAL >> initializer ) );
+		init_declarator_list = single_declaration >> *( COMMA >> declaration_identifier );
 		init_declarator_list.name( "init_declarator_list" );
 
 		precision_qualifier = HIGH_PRECISION
@@ -587,7 +658,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		initializer_list = initializer >> *( COMMA >> initializer );
 		initializer_list.name( "initializer_list" );
 
-		declaration_statement = declaration_grammar;
+		declaration_statement = declaration;
 		declaration_statement.name( "declaration_statement" );
 
 		compound_statement_no_new_scope = ( LEFT_BRACE >> RIGHT_BRACE )
@@ -606,62 +677,64 @@ BEGIN_NAMESPACE_GLSL_PARSER
 			| simple_statement.alias();
 		statement.name( "statement" );
 
-		statement_list = +statement;
+		statement_list = +statement[&on_statement];
 		statement_list.name( "statement_list" );
 
-		expression_statement = -expression_grammar >> SEMICOLON;
+		expression_statement = -expression >> SEMICOLON;
 		expression_statement.name( "expression_statement" );
 
 		selection_rest_statement = statement >> -( ELSE >> statement );
 		selection_rest_statement.name( "selection_rest_statement" );
 
-		selection_statement = IF >> LEFT_PAREN >> expression_grammar >> RIGHT_PAREN >> selection_rest_statement;
+		selection_statement = IF >> LEFT_PAREN >> expression >> RIGHT_PAREN >> selection_rest_statement;
 		selection_statement.name( "selection_statement" );
 
-		condition = expression_grammar
-			| ( fully_specified_type >> identifier >> EQUAL >> initializer );
+		condition = expression
+			| ( fully_specified_type[&on_fully_specified_type] >> identifier >> EQUAL >> initializer );
 		condition.name( "condition" );
 
-		case_label = ( ( CASE >> expression_grammar ) | DEFAULT ) >> COLON;
+		case_label = ( ( CASE >> expression ) | DEFAULT ) >> COLON;
 		case_label.name( "case_label" );
 
 		switch_statement_list = -statement_list;
 		switch_statement_list.name( "switch_statement_list" );
 
-		switch_statement = SWITCH >> LEFT_PAREN >> expression_grammar >> RIGHT_PAREN >> LEFT_BRACE >> switch_statement_list >> RIGHT_BRACE;
+		switch_statement = SWITCH >> LEFT_PAREN >> expression >> RIGHT_PAREN >> LEFT_BRACE >> switch_statement_list >> RIGHT_BRACE;
 		switch_statement.name( "switch_statement" );
 
-		for_init_statement = expression_statement | declaration_statement;
+		for_init_statement = expression_statement
+			| declaration_statement;
 		for_init_statement.name( "for_init_statement" );
 
-		for_rest_statement = -condition >> SEMICOLON >> -expression_grammar;
+		for_rest_statement = -condition >> SEMICOLON >> -expression;
 		for_rest_statement.name( "for_rest_statement" );
 
 		iteration_statement = ( WHILE >> LEFT_PAREN >> condition >> RIGHT_PAREN >> statement_no_new_scope )
-			| ( DO >> statement >> WHILE >> LEFT_PAREN >> expression_grammar >> RIGHT_PAREN >> SEMICOLON )
+			| ( DO >> statement >> WHILE >> LEFT_PAREN >> expression >> RIGHT_PAREN >> SEMICOLON )
 			| ( FOR >> LEFT_PAREN >> for_init_statement >> for_rest_statement >> RIGHT_PAREN )
 			| statement_no_new_scope;
 		iteration_statement.name( "iteration_statement" );
 
-		jump_statement = ( CONTINUE | BREAK | RETURN | ( RETURN >> -expression_grammar ) | DISCARD ) >> SEMICOLON;
+		jump_statement = ( CONTINUE | BREAK | ( RETURN >> -expression ) | DISCARD ) >> SEMICOLON;
 		jump_statement.name( "jump_statement" );
 
-		simple_statement = declaration_statement
-			| expression_statement
-			| selection_statement
-			| switch_statement
-			| case_label
-			| iteration_statement
-			| jump_statement;
+		simple_statement = declaration_statement[&on_declaration_statement]
+			| expression_statement[&on_expression_statement]
+			| selection_statement[&on_selection_statement]
+			| switch_statement[&on_switch_statement]
+			| case_label[&on_case_label]
+			| jump_statement[&on_jump_statement]
+			| iteration_statement[&on_iteration_statement];
 		simple_statement.name( "simple_statement" );
 
-		function_definition = function_prototype >> compound_statement_no_new_scope;
+		function_definition = function_prototype[&on_function_prototype] >> compound_statement_no_new_scope;
 		function_definition.name( "function_definition" );
 
-		external_declaration = function_grammar | declaration_grammar;
+		external_declaration = function_definition[&on_function_definition] | declaration[&on_declaration];
 		external_declaration.name( "external_declaration" );
 
-		translation_unit = +external_declaration;
+		translation_unit = +external_declaration[&on_external_declaration];
+		//translation_unit = VOID >> "main" >> LEFT_PAREN >> -VOID >> RIGHT_PAREN >> LEFT_BRACE >> RIGHT_BRACE;
 		translation_unit.name( "translation_unit" );
 	}
 

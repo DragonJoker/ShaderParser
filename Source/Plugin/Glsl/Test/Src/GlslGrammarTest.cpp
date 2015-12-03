@@ -14,6 +14,8 @@
 #include "GlslGrammarTest.h"
 #include "GlslParserTestPluginLoader.h"
 
+#include <ShaderParserLogger.h>
+
 BEGIN_NAMESPACE_GLSL_PARSER_TEST
 {
 	static const String GLSL_PLUGIN = STR( "GlslParser" );
@@ -57,13 +59,13 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 		std::string l_shader =
 		"void main(void)\n"
 		"{\n"
-		//"	vec4 a = gl_Vertex;\n"
+		"	vec4 a = gl_Vertex;\n"
 		//"	a.x = a.x * 0.5;\n"
 		//"	a.y = a.y * 0.5;\n"
 		//"	gl_Position = gl_ModelViewProjectionMatrix * a;\n"
-		"}";
+		"}\n";
 
-		qi::phrase_parse( l_shader.begin(), l_shader.end(), *l_grammar, qi::space_type() );
+		BOOST_CHECK( qi::phrase_parse( l_shader.begin(), l_shader.end(), *l_grammar, qi::ascii::space ) );
 		delete l_grammar;
 
 		UnloadPlugins();

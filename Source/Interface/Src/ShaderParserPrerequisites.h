@@ -71,8 +71,8 @@ namespace ShaderParser
 	using InputStream = std::basic_istream< TChar >;
 	using Format = boost::basic_format< TChar >;
 
-	using Rule = qi::rule< String::iterator, qi::space_type >;
-	using Grammar = qi::grammar< String::iterator, qi::space_type >;
+	using Rule = qi::rule< String::iterator, qi::ascii::space_type >;
+	using Grammar = qi::grammar< String::iterator, qi::ascii::space_type >;
 
 #	define STR( x ) x
 #	define tcout std::cout

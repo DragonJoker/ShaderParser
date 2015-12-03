@@ -99,31 +99,23 @@ BEGIN_NAMESPACE_SHADER_PARSER
 			| qi::char_( 'U' );
 		integer_suffix.name( "integer_suffix" );
 
-		decimal_constant = nonzero_digit
-			| ( decimal_constant >> digit );
+		decimal_constant = nonzero_digit >> *digit;
 		decimal_constant.name( "decimal_constant" );
 
-		octal_constant = -sign >> qi::char_( '0' )
-			| ( octal_constant >> octal_digit );
+		octal_constant = qi::char_( '0' ) >> *octal_digit;
 		octal_constant.name( "octal_constant" );
 
-		hexadecimal_constant = qi::string( "0x" ) >> hexadecimal_digit
-			| qi::string( "0X" ) >> hexadecimal_digit
-			| hexadecimal_constant >> hexadecimal_digit;
+		hexadecimal_constant = ( qi::string( "0x" ) | qi::string( "0X" ) ) >> +hexadecimal_digit;
 		hexadecimal_constant.name( "hexadecimal_constant" );
 
-		identifier = non_digit
-			| ( identifier >> non_digit )
-			| ( identifier >> digit );
+		identifier = non_digit >> *( non_digit | digit );
 		identifier.name( "identifier" );
 
-		type_name = identifier
-			| ( identifier >> non_digit )
-			| ( identifier >> digit );
+		type_name = non_digit >> *( non_digit | digit );
 		type_name.name( "type_name" );
 
 		integer_constant = -sign >> decimal_constant >> -integer_suffix
-			| octal_constant >> -integer_suffix
+			| -sign >> octal_constant >> -integer_suffix
 			| hexadecimal_constant >> -integer_suffix;
 		integer_constant.name( "integer_constant" );
 
@@ -132,7 +124,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 			| hexadecimal_constant >> -integer_suffix;
 		uinteger_constant.name( "uinteger_constant" );
 
-		digit_sequence = digit >> *digit;
+		digit_sequence = +digit;
 		digit_sequence.name( "digit_sequence" );
 
 		floating_suffix = qi::char_( 'f' )
@@ -143,13 +135,11 @@ BEGIN_NAMESPACE_SHADER_PARSER
 			| qi::string( "D" );
 		floating_suffix.name( "floating_suffix" );
 
-		exponent_part = qi::char_( 'e' ) >> -sign >> digit_sequence
-			| qi::char_( 'E' ) >> -sign >> digit_sequence;
+		exponent_part = ( qi::char_( 'e' ) | qi::char_( 'E' ) ) >> -sign >> digit_sequence;
 		exponent_part.name( "exponent_part" );
 
-		fractional_constant = digit_sequence >> qi::char_( '.' ) >> digit_sequence
-			| digit_sequence >> qi::char_( '.' )
-			| qi::char_( '.' ) >> digit_sequence;
+		fractional_constant = -digit_sequence >> DOT >> digit_sequence
+			| digit_sequence >> DOT;
 		fractional_constant.name( "fractional_constant" );
 
 		floating_constant = fractional_constant >> -exponent_part >> -floating_suffix

@@ -37,9 +37,6 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		static CShaderGrammar * Create();
 
 	private:
-		Grammar expression_grammar;
-		Grammar declaration_grammar;
-		Grammar function_grammar;
 		Rule variable_identifier;
 		Rule field_selection;
 		Rule function_identifier;
@@ -50,6 +47,8 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		Rule function_call_header;
 		Rule function_call;
 		Rule integer_expression;
+		Rule postfix_expression_start;
+		Rule postfix_expression_rest;
 		Rule postfix_expression;
 		Rule unary_expression;
 		Rule unary_operator;
@@ -84,6 +83,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		Rule function_prototype;
 		Rule identifier_list;
 		Rule initializer;
+		Rule declaration_identifier;
 		Rule single_declaration;
 		Rule init_declarator_list;
 		Rule precision_qualifier;
