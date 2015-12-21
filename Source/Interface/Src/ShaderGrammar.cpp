@@ -155,7 +155,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		bool_constant.name( "bool_constant" );
 	}
 
-CShaderGrammar::~CShaderGrammar()
+	CShaderGrammar::~CShaderGrammar()
 	{
 	}
 }

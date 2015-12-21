@@ -98,7 +98,6 @@
 		using class_name##SPtr = std::shared_ptr< C##class_name >;\
 		using class_name##WPtr = std::weak_ptr< C##class_name >;\
 		using class_name##UPtr = std::unique_ptr< C##class_name >;\
-		using class_name##APtr = std::auto_ptr< C##class_name >;\
 		using class_name##RPtr = C##class_name *
 
 #if !defined( PARSER_PARAM_UNUSED )

@@ -34,7 +34,7 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 #if BOOST_VERSION < 105900
 		m_testSuite = new boost::unit_test::test_suite( "CGlslGrammarTest" );
 #else
-		testSuite = new boost::unit_test::test_suite( "CGlslGrammarTest", __FILE__, __LINE__ );
+		m_testSuite = new boost::unit_test::test_suite( "CGlslGrammarTest", __FILE__, __LINE__ );
 #endif
 
 		//!@remarks Add the TC to the internal TS.
@@ -65,7 +65,7 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 		//"	gl_Position = gl_ModelViewProjectionMatrix * a;\n"
 		"}\n";
 
-		BOOST_CHECK( qi::phrase_parse( l_shader.begin(), l_shader.end(), *l_grammar, qi::ascii::space ) );
+		BOOST_CHECK( qi::phrase_parse( l_shader.begin(), l_shader.end(), *l_grammar, l_grammar->GetSkipper() ) );
 		delete l_grammar;
 
 		UnloadPlugins();
