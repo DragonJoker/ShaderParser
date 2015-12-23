@@ -50,7 +50,7 @@ set( Boost_USE_MULTITHREADED ON )
 
 option( BUILD_TESTS "Build test applications" ON )
 
-find_package( Boost 1.49 REQUIRED date_time locale filesystem system )
+find_package( Boost 1.46 REQUIRED date_time locale filesystem system )
 
 #--------------------------------------------------------------------------------------------------
 #	Adding include dirs to include search path
