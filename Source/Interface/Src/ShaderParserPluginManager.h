@@ -16,7 +16,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Manager for plugins.
 	@remarks
@@ -175,6 +175,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		String m_translationsPath;
 	};
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_PLUGIN_MANAGER_H___

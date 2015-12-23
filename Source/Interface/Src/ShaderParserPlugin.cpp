@@ -20,7 +20,7 @@
 #include "ShaderParserFileUtils.h"
 #include "ShaderParserStringUtils.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	const String ERROR_DB_FACTORY_IS_NULL = STR( "ShaderParser factory is null" );
 
@@ -66,4 +66,3 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		}
 	}
 }
-END_NAMESPACE_SHADER_PARSER

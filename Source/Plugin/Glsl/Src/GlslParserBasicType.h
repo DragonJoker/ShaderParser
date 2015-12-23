@@ -16,18 +16,17 @@
 
 #include <ShaderParserBasicTypes.h>
 
-BEGIN_NAMESPACE_GLSL_PARSER
+namespace GlslParser
 {
 	/** Class listing GLSL basic types.
 	*/
 	class CBasicTypes
-		: public CParserBasicTypes< EKeyword >
+		: public ShaderParser::CParserBasicTypes< EKeyword >
 	{
 	public:
 		CBasicTypes();
 		~CBasicTypes();
 	};
 }
-END_NAMESPACE_GLSL_PARSER
 
 #endif // ___GLSL_PARSER_BASIC_TYPES_H___

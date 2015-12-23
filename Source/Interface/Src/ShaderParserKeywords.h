@@ -14,7 +14,7 @@
 
 #include "EToken.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Class listing Parser keywords
 	*/
@@ -38,7 +38,6 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		{
 		}
 	};
-
-} END_NAMESPACE_SHADER_PARSER
+}
 
 #endif // ___SHADER_PARSER_KEYWORDS_H___

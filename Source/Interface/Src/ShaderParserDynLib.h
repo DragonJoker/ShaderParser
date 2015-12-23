@@ -26,7 +26,7 @@ typedef struct HINSTANCE__ * hInstance;
 #	define DYNLIB_HANDLE void *
 #endif
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Resource holding data about a dynamic library.
 	@remarks
@@ -86,6 +86,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		DYNLIB_HANDLE m_handle;
 	};
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_DYNAMIC_LIBRARY_H___

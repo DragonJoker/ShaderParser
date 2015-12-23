@@ -16,7 +16,7 @@
 
 #include <boost/test/unit_test_suite.hpp>
 
-BEGIN_NAMESPACE_SHADER_PARSER_TEST
+namespace ShaderParserTest
 {
 	/** ShaderParser unit test class
 	*/
@@ -88,6 +88,5 @@ BEGIN_NAMESPACE_SHADER_PARSER_TEST
 		//!@}
 	};
 }
-END_NAMESPACE_SHADER_PARSER_TEST
 
 #endif // ___SHADER_PARSER_STRINGUTILS_TEST_H___

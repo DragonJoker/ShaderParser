@@ -18,29 +18,24 @@
 
 #include <ShaderParserLogger.h>
 
-#define BEGIN_NAMESPACE_GLSL_PARSER BEGIN_NAMESPACE_SHADER_PARSER { namespace GLSL
-#define NAMESPACE_GLSL_PARSER NAMESPACE_SHADER_PARSER::GLSL
-#define END_NAMESPACE_GLSL_PARSER } END_NAMESPACE_SHADER_PARSER
-
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace GlslParser
 {
-	namespace GLSL
-	{
-		// Pre-declare classes
-		// Allows use of pointers in header files without including individual .h
-		// so decreases dependencies between files
-		class CGlslParser;
-		class CPluginGlslParser;
-		class CFactoryGlslParser;
+	// Pre-declare classes
+	// Allows use of pointers in header files without including individual .h
+	// so decreases dependencies between files
+	class CPluginGlslParser;
+	class CFactoryGlslParser;
 
-		// Factory constants
-		const String FACTORY_GLSL_PARSER = STR( "Factory ShaderParser GLSL" );
+	class CGlslGrammar;
+	class CGlslExpressionGrammar;
+	class CGlslTypeGrammar;
 
-		// Plugin constants
-		const String GLSL_PARSER_TYPE = STR( "ShaderParser.GLSL" );
-		const String PLUGIN_NAME_GLSL_PARSER = STR( "Plugin ShaderParser GLSL" );
-	}
+	// Factory constants
+	const ShaderParser::String FACTORY_GLSL_PARSER = STR( "Factory ShaderParser GLSL" );
+
+	// Plugin constants
+	const ShaderParser::String GLSL_PARSER_TYPE = STR( "ShaderParser.GLSL" );
+	const ShaderParser::String PLUGIN_NAME_GLSL_PARSER = STR( "Plugin ShaderParser GLSL" );
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___GLSL_PARSER_PREREQUISITES_H___

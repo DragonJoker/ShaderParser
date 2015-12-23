@@ -118,8 +118,6 @@ if( Boost_FOUND )
 
 	PluginBuild()
 
-	add_subdirectory( Test )
-
 	SET( msg "Database following plugins will be built" )
 	PluginSummary( ${msg} )
 	MESSAGE( STATUS ${msg} )

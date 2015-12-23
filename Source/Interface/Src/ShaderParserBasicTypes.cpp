@@ -13,7 +13,6 @@
 
 #include "ShaderParserKeywords.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 }
-END_NAMESPACE_SHADER_PARSER

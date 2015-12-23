@@ -14,9 +14,9 @@
 #include "ShaderGrammar.h"
 #include "ShaderParserKeywords.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
-	CShaderGrammar::CShaderGrammar()
+	CShaderGrammar::CShaderGrammar( Rule const & translation_unit )
 		: Grammar( translation_unit )
 		, LEFT_ANGLE( qi::char_( '<' ), "LEFT_ANGLE" )
 		, RIGHT_ANGLE( qi::char_( '>' ), "RIGHT_ANGLE" )
@@ -74,6 +74,12 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		, CONTINUE( qi::string( "continue" ), "CONTINUE" )
 		, BREAK( qi::string( "break" ), "BREAK" )
 		, RETURN( qi::string( "return" ), "RETURN" )
+		, VOID( "void", "VOID" )
+		, FLOAT( "float", "FLOAT" )
+		, DOUBLE( "double", "DOUBLE" )
+		, INT( "int", "INT" )
+		, UINT( "uint", "UINT" )
+		, BOOL( "bool", "BOOL" )
 	{
 		non_digit = qi::ascii::alpha
 			| qi::char_( '_' );
@@ -159,4 +165,3 @@ BEGIN_NAMESPACE_SHADER_PARSER
 	{
 	}
 }
-END_NAMESPACE_SHADER_PARSER

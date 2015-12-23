@@ -21,7 +21,7 @@
 #pragma warning( push )
 #pragma warning( disable:4290 )
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Base class for a message representation
 	*/
@@ -50,7 +50,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 	*/
 	template< typename Char, typename Converter >
 	struct SBasicMessage
-		: public SMessageBase
+			: public SMessageBase
 	{
 		typedef std::basic_string< Char > string_type;
 
@@ -75,11 +75,11 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		//! The message text
 		string_type m_message;
 	};
-	
+
 	/** Template class, used to convert message to String
 	*/
 	template< typename Char > struct SMsgConverter;
-	
+
 	/** SMsgConverter specialisation, for char (no conversion)
 	*/
 	template<>
@@ -90,7 +90,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 			return msg;
 		}
 	};
-	
+
 	/** SMsgConverter specialisation, for wchar_t
 	*/
 	template<>
@@ -203,7 +203,6 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		std::unique_ptr< CProgramConsole > _console;
 	};
 }
-END_NAMESPACE_SHADER_PARSER
 
 #pragma warning( pop)
 

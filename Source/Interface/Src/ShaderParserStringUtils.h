@@ -14,7 +14,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** String functions class
 	*/
@@ -375,6 +375,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 	*/
 	ShaderParserExport std::ostream & operator <<( std::ostream & stream, wchar_t const * string );
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif

@@ -16,7 +16,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Class defining a generic database plugin.
 	*/
@@ -87,8 +87,6 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		//! Plugin install state.
 		bool _installed;
 	};
-
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_PLUGIN_SHADER_PARSER_H___

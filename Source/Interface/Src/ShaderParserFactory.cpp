@@ -15,7 +15,7 @@
 
 #include "ShaderParserFactory.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	CFactoryShaderGrammar::CFactoryShaderGrammar()
 	{
@@ -60,4 +60,3 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		return NULL;
 	}
 }
-END_NAMESPACE_SHADER_PARSER

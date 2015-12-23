@@ -19,7 +19,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 }
 

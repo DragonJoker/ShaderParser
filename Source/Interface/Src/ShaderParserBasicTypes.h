@@ -14,7 +14,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Class listing Parser basic types
 	*/
@@ -38,7 +38,6 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		{
 		}
 	};
-
-} END_NAMESPACE_SHADER_PARSER
+}
 
 #endif // ___SHADER_PARSER_BASIC_TYPES_H___

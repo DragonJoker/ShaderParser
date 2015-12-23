@@ -16,7 +16,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Enumeration of supported GLSL keywords.
 	*/
@@ -81,6 +81,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		EToken_COUNT
 	}	EToken;
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_TOKEN_H___

@@ -21,7 +21,7 @@
 
 #include <clocale>
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	namespace StringUtils
 	{
@@ -38,7 +38,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 			template< typename OutChar, typename InChar >
 			std::basic_string< OutChar > str_convert( std::basic_string< InChar > const & )
 			{
-			//	static_assert( false, "Not implemented" );
+				//	static_assert( false, "Not implemented" );
 			}
 
 			template<>
@@ -609,14 +609,13 @@ BEGIN_NAMESPACE_SHADER_PARSER
 
 	std::ostream & operator <<( std::ostream & stream, const std::wstring & string )
 	{
-		stream << NAMESPACE_SHADER_PARSER::StringUtils::ToStr( string );
+		stream << StringUtils::ToStr( string );
 		return stream;
 	}
 
 	std::ostream & operator <<( std::ostream & stream, const wchar_t * string )
 	{
-		stream << NAMESPACE_SHADER_PARSER::StringUtils::ToStr( string );
+		stream << StringUtils::ToStr( string );
 		return stream;
 	}
 }
-END_NAMESPACE_SHADER_PARSER

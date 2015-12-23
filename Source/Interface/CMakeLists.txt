@@ -43,3 +43,5 @@ copy_dll( ${PROJECT_NAME} "${Boost_LOCALE_LIBRARY_RELEASE}" RelWithDebInfo )
 copy_dll( ${PROJECT_NAME} "${Boost_SYSTEM_LIBRARY_DEBUG}" Debug )
 copy_dll( ${PROJECT_NAME} "${Boost_SYSTEM_LIBRARY_RELEASE}" Release )
 copy_dll( ${PROJECT_NAME} "${Boost_SYSTEM_LIBRARY_RELEASE}" RelWithDebInfo )
+
+add_subdirectory( Test )

@@ -21,7 +21,7 @@
 
 #include "ShaderParserLogger.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	const String SYMBOL_DLL_STOP = STR( "DllStopPlugin" );
 	const String SYMBOL_DLL_START = STR( "DllStartPlugin" );
@@ -187,4 +187,3 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		}
 	}
 }
-END_NAMESPACE_SHADER_PARSER

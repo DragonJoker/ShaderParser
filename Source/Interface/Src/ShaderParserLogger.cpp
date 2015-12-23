@@ -19,7 +19,7 @@
 #include "ShaderParserStringUtils.h"
 #include "ShaderParserException.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	static const String ERROR_DB_LOGGER_ALREADY_INITIALISED = STR( "Logger instance already initialised" );
 
@@ -547,4 +547,3 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		_logThread.join();
 	}
 }
-END_NAMESPACE_SHADER_PARSER

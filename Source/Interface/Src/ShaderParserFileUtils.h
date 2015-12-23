@@ -14,7 +14,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	namespace FileUtils
 	{
@@ -52,6 +52,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		ShaderParserExport bool CreateFolder( String const & pathFolder );
 	}
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif //___SHADER_PARSER_FILE_UTILS_H___

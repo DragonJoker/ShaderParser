@@ -16,12 +16,12 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Defines the various log types
 	*/
 	typedef enum ELogType
-		: uint8_t
+	: uint8_t
 	{
 		ELogType_DEBUG,		//!< Debug type log
 		ELogType_INFO,		//!< Info type log
@@ -30,6 +30,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		ELogType_COUNT,		//!< Number of log types
 	}	ELogType;
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_LOG_TYPE_H___

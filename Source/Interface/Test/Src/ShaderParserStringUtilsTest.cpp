@@ -1,0 +1,258 @@
+/************************************************************************//**
+ * @file ShaderParserStringUtilsTest.cpp
+ * @author Sylvain Doremus
+ * @version 1.0
+ * @date 11/23/2015
+ *
+ *
+ * @brief Class testing StringUtils functions
+*
+***************************************************************************/
+
+#include "ShaderParserTestPch.h"
+
+#include "ShaderParserStringUtilsTest.h"
+
+#include "ShaderParserTestHelpers.h"
+
+namespace ShaderParserTest
+{
+	CShaderParserStringUtilsTest::CShaderParserStringUtilsTest()
+	{
+	}
+
+	CShaderParserStringUtilsTest::~CShaderParserStringUtilsTest()
+	{
+	}
+
+	boost::unit_test::test_suite * CShaderParserStringUtilsTest::Init_Test_Suite()
+	{
+		//!@remarks Create the internal TS instance.
+#if BOOST_VERSION < 105900
+		testSuite = new boost::unit_test::test_suite( "CShaderParserStringUtilsTest" );
+#else
+		testSuite = new boost::unit_test::test_suite( "CShaderParserStringUtilsTest", __FILE__, __LINE__ );
+#endif
+
+		//!@remarks Add the TC to the internal TS.
+		testSuite->add( BOOST_TEST_CASE( std::bind( &CShaderParserStringUtilsTest::TestCase_StringUtilsIsUpperIsLower, this ) ) );
+		testSuite->add( BOOST_TEST_CASE( std::bind( &CShaderParserStringUtilsTest::TestCase_StringUtilsUpperLower, this ) ) );
+		testSuite->add( BOOST_TEST_CASE( std::bind( &CShaderParserStringUtilsTest::TestCase_StringUtilsToUpperToLower, this ) ) );
+		testSuite->add( BOOST_TEST_CASE( std::bind( &CShaderParserStringUtilsTest::TestCase_StringUtilsConversions, this ) ) );
+		testSuite->add( BOOST_TEST_CASE( std::bind( &CShaderParserStringUtilsTest::TestCase_StringUtilsSplit, this ) ) );
+		testSuite->add( BOOST_TEST_CASE( std::bind( &CShaderParserStringUtilsTest::TestCase_StringUtilsTrim, this ) ) );
+		testSuite->add( BOOST_TEST_CASE( std::bind( &CShaderParserStringUtilsTest::TestCase_StringUtilsReplace, this ) ) );
+		testSuite->add( BOOST_TEST_CASE( std::bind( &CShaderParserStringUtilsTest::TestCase_StringUtilsFormalize, this ) ) );
+
+		//!@remarks Return the TS instance.
+		return testSuite;
+	}
+
+	void CShaderParserStringUtilsTest::TestCase_StringUtilsIsUpperIsLower()
+	{
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** Start TestCase_StringUtilsIsUpperIsLower ****" );
+
+		BOOST_CHECK( !ShaderParser::StringUtils::IsUpperCase( "NoTuPpErCaSe" ) );
+		BOOST_CHECK( ShaderParser::StringUtils::IsUpperCase( "UPPERCASE" ) );
+		BOOST_CHECK( !ShaderParser::StringUtils::IsLowerCase( "NoTlOwErCaSe" ) );
+		BOOST_CHECK( ShaderParser::StringUtils::IsLowerCase( "lowercase" ) );
+		BOOST_CHECK( !ShaderParser::StringUtils::IsUpperCase( L"NoTuPpErCaSe" ) );
+		BOOST_CHECK( ShaderParser::StringUtils::IsUpperCase( L"UPPERCASE" ) );
+		BOOST_CHECK( !ShaderParser::StringUtils::IsLowerCase( L"NoTlOwErCaSe" ) );
+		BOOST_CHECK( ShaderParser::StringUtils::IsLowerCase( L"lowercase" ) );
+
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** End TestCase_StringUtilsIsUpperIsLower ****" );
+	}
+
+	void CShaderParserStringUtilsTest::TestCase_StringUtilsUpperLower()
+	{
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** Start TestCase_ShaderParserConnection ****" );
+
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::UpperCase( "NoTuPpErCaSe" ), "NOTUPPERCASE" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::UpperCase( "UPPERCASE" ), "UPPERCASE" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::LowerCase( "NoTlOwErCaSe" ), "notlowercase" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::LowerCase( "lowercase" ), "lowercase" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::UpperCase( L"NoTuPpErCaSe" ), L"NOTUPPERCASE" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::UpperCase( L"UPPERCASE" ), L"UPPERCASE" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::LowerCase( L"NoTlOwErCaSe" ), L"notlowercase" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::LowerCase( L"lowercase" ), L"lowercase" );
+
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** End TestCase_ShaderParserStringUtils ****" );
+	}
+
+	void CShaderParserStringUtilsTest::TestCase_StringUtilsToUpperToLower()
+	{
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** Start TestCase_StringUtilsToUpperToLower ****" );
+
+		std::string snotupper = "NoTuPpErCaSe";
+		std::string supper = "UPPERCASE";
+		std::string snotlower = "NoTlOwErCaSe";
+		std::string slower = "lowercase";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToUpperCase( snotupper ), "NOTUPPERCASE" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToUpperCase( supper ), "UPPERCASE" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToLowerCase( snotlower ), "notlowercase" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToLowerCase( slower ), "lowercase" );
+		BOOST_CHECK_EQUAL( snotupper, "NOTUPPERCASE" );
+		BOOST_CHECK_EQUAL( supper, "UPPERCASE" );
+		BOOST_CHECK_EQUAL( snotlower, "notlowercase" );
+		BOOST_CHECK_EQUAL( slower, "lowercase" );
+
+		std::wstring wnotupper = L"NoTuPpErCaSe";
+		std::wstring wupper = L"UPPERCASE";
+		std::wstring wnotlower = L"NoTlOwErCaSe";
+		std::wstring wlower = L"lowercase";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToUpperCase( wnotupper ), L"NOTUPPERCASE" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToUpperCase( wupper ), L"UPPERCASE" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToLowerCase( wnotlower ), L"notlowercase" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToLowerCase( wlower ), L"lowercase" );
+		BOOST_CHECK_EQUAL( wnotupper, L"NOTUPPERCASE" );
+		BOOST_CHECK_EQUAL( wupper, L"UPPERCASE" );
+		BOOST_CHECK_EQUAL( wnotlower, L"notlowercase" );
+		BOOST_CHECK_EQUAL( wlower, L"lowercase" );
+
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** End TestCase_StringUtilsToUpperToLower ****" );
+	}
+
+	void CShaderParserStringUtilsTest::TestCase_StringUtilsConversions()
+	{
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** Start TestCase_StringUtilsConversions ****" );
+		std::wstring ws = L"ÂÄÊËÎÏÔÖÛÜ";
+		std::string s = "ÂÄÊËÎÏÔÖÛÜ";
+		std::string utf8 = "ÂÄÊËÎÏÔÖÛÜ";
+
+#if 1// !defined( _WIN32 ) // Disabled with MSVC since Windos does not support UTF8 locales
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "  ToWStr" );
+		BOOST_CHECK_EQUAL( ws, ShaderParser::StringUtils::ToWStr( s ) );
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "  ToStr" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToStr( ws ), s );
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "  ToUtf8" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToUtf8( s, "UTF-8" ), utf8 );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::ToUtf8( ws, "UTF-8" ), utf8 );
+#endif
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** End TestCase_StringUtilsConversions ****" );
+	}
+
+	void CShaderParserStringUtilsTest::TestCase_StringUtilsSplit()
+	{
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** Start TestCase_StringUtilsSplit ****" );
+
+		std::string stosplit = "dsfs,gsdg,,sdfh,sdh,dshgh,dfh,dsfh,dsfhsdfhsd,fhsdfh,dfhdsh";
+		auto ssplitted = ShaderParser::StringUtils::Split( stosplit, ",", 1, false );
+		BOOST_CHECK_EQUAL( ssplitted.size(), 2 );
+		BOOST_CHECK_EQUAL( ssplitted[0], "dsfs" );
+		BOOST_CHECK_EQUAL( ssplitted[1], "gsdg,,sdfh,sdh,dshgh,dfh,dsfh,dsfhsdfhsd,fhsdfh,dfhdsh" );
+		uint32_t scount = uint32_t( std::count( stosplit.begin(), stosplit.end(), ',' ) );
+		BOOST_CHECK_NO_THROW( ssplitted = ShaderParser::StringUtils::Split( stosplit, ",", scount, false ) );
+		BOOST_CHECK_EQUAL( ssplitted.size(), scount );
+		BOOST_CHECK_NO_THROW( ssplitted = ShaderParser::StringUtils::Split( stosplit, ",", scount, true ) );
+		BOOST_CHECK_EQUAL( ssplitted.size(), scount + 1 );
+		std::wstring wtosplit = L"dsfs,gsdg,,sdfh,sdh,dshgh,dfh,dsfh,dsfhsdfhsd,fhsdfh,dfhdsh";
+		auto wsplitted = ShaderParser::StringUtils::Split( wtosplit, L",", 1, false );
+		BOOST_CHECK_EQUAL( wsplitted.size(), 2 );
+		BOOST_CHECK_EQUAL( wsplitted[0], L"dsfs" );
+		BOOST_CHECK_EQUAL( wsplitted[1], L"gsdg,,sdfh,sdh,dshgh,dfh,dsfh,dsfhsdfhsd,fhsdfh,dfhdsh" );
+		uint32_t wcount = uint32_t( std::count( wtosplit.begin(), wtosplit.end(), L',' ) );
+		BOOST_CHECK_NO_THROW( wsplitted = ShaderParser::StringUtils::Split( wtosplit, L",", wcount, false ) );
+		BOOST_CHECK_EQUAL( wsplitted.size(), wcount );
+		BOOST_CHECK_NO_THROW( wsplitted = ShaderParser::StringUtils::Split( wtosplit, L",", wcount, true ) );
+		BOOST_CHECK_EQUAL( wsplitted.size(), wcount + 1 );
+
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** End TestCase_StringUtilsSplit ****" );
+	}
+
+	void CShaderParserStringUtilsTest::TestCase_StringUtilsTrim()
+	{
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** Start TestCase_StringUtilsTrim ****" );
+
+		std::string stotrim = "AA";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( stotrim ), "AA" );
+		BOOST_CHECK_EQUAL( stotrim, "AA" );
+		stotrim = "AA ";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( stotrim ), "AA" );
+		BOOST_CHECK_EQUAL( stotrim, "AA" );
+		stotrim = " AA";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( stotrim ), "AA" );
+		BOOST_CHECK_EQUAL( stotrim, "AA" );
+		stotrim = " AA ";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( stotrim, false ), " AA" );
+		BOOST_CHECK_EQUAL( stotrim, " AA" );
+		stotrim = " AA ";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( stotrim, true, false ), "AA " );
+		BOOST_CHECK_EQUAL( stotrim, "AA " );
+		stotrim = " AA ";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( stotrim, false, false ), " AA " );
+		BOOST_CHECK_EQUAL( stotrim, " AA " );
+		std::wstring wtotrim = L"AA";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( wtotrim ), L"AA" );
+		BOOST_CHECK_EQUAL( wtotrim, L"AA" );
+		wtotrim = L"AA ";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( wtotrim ), L"AA" );
+		BOOST_CHECK_EQUAL( wtotrim, L"AA" );
+		wtotrim = L" AA";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( wtotrim ), L"AA" );
+		BOOST_CHECK_EQUAL( wtotrim, L"AA" );
+		wtotrim = L" AA ";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( wtotrim, false ), L" AA" );
+		BOOST_CHECK_EQUAL( wtotrim, L" AA" );
+		wtotrim = L" AA ";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( wtotrim, true, false ), L"AA " );
+		BOOST_CHECK_EQUAL( wtotrim, L"AA " );
+		wtotrim = L" AA ";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Trim( wtotrim, false, false ), L" AA " );
+		BOOST_CHECK_EQUAL( wtotrim, L" AA " );
+
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** End TestCase_StringUtilsTrim ****" );
+	}
+
+	void CShaderParserStringUtilsTest::TestCase_StringUtilsReplace()
+	{
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** Start TestCase_StringUtilsReplace ****" );
+
+		std::string sreplace = "gsdg,,sdfh,sdh,dshgh,dfh,dsfh,dsfhsdfhsd,fhsdfh,dfhdsh";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Replace( sreplace, ",", " " ), "gsdg  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh dfhdsh" );
+		BOOST_CHECK_EQUAL( sreplace, "gsdg  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh dfhdsh" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Replace( sreplace, "gsdg", "je" ), "je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh dfhdsh" );
+		BOOST_CHECK_EQUAL( sreplace, "je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh dfhdsh" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Replace( sreplace, "dfhdsh", "voilà" ), "je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh voilà" );
+		BOOST_CHECK_EQUAL( sreplace, "je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh voilà" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Replace( sreplace, "coin", "glop" ), "je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh voilà" );
+		BOOST_CHECK_EQUAL( sreplace, "je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh voilà" );
+		std::wstring wreplace = L"gsdg,,sdfh,sdh,dshgh,dfh,dsfh,dsfhsdfhsd,fhsdfh,dfhdsh";
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Replace( wreplace, L",", L" " ), L"gsdg  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh dfhdsh" );
+		BOOST_CHECK_EQUAL( wreplace, L"gsdg  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh dfhdsh" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Replace( wreplace, L"gsdg", L"je" ), L"je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh dfhdsh" );
+		BOOST_CHECK_EQUAL( wreplace, L"je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh dfhdsh" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Replace( wreplace, L"dfhdsh", L"voilà" ), L"je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh voilà" );
+		BOOST_CHECK_EQUAL( wreplace, L"je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh voilà" );
+		BOOST_CHECK_EQUAL( ShaderParser::StringUtils::Replace( wreplace, L"coin", L"glop" ), L"je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh voilà" );
+		BOOST_CHECK_EQUAL( wreplace, L"je  sdfh sdh dshgh dfh dsfh dsfhsdfhsd fhsdfh voilà" );
+
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** End TestCase_StringUtilsReplace ****" );
+	}
+
+	void CShaderParserStringUtilsTest::TestCase_StringUtilsFormalize()
+	{
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** Start TestCase_StringUtilsFormalize ****" );
+
+		std::string sformalized;
+		BOOST_CHECK_NO_THROW( ShaderParser::StringUtils::Formalize( sformalized, 10, "%010i", 100 ) );
+		BOOST_CHECK_EQUAL( sformalized, "0000000100" );
+		BOOST_CHECK_NO_THROW( ShaderParser::StringUtils::Formalize( sformalized, 9, "%010i", 100 ) );
+		BOOST_CHECK_EQUAL( sformalized, "000000010" );
+		BOOST_CHECK_NO_THROW( ShaderParser::StringUtils::Formalize( sformalized, 9, "%.2f", 100 ) );
+		BOOST_CHECK_NE( sformalized, "100" );
+		BOOST_CHECK_NO_THROW( ShaderParser::StringUtils::Formalize( sformalized, 9, "%.2f", 100.0f ) );
+		BOOST_CHECK_EQUAL( sformalized, "100.00" );
+		std::wstring wformalized;
+		BOOST_CHECK_NO_THROW( ShaderParser::StringUtils::Formalize( wformalized, 10, L"%010i", 100 ) );
+		BOOST_CHECK_EQUAL( wformalized, L"0000000100" );
+		BOOST_CHECK_NO_THROW( ShaderParser::StringUtils::Formalize( wformalized, 9, L"%010i", 100 ) );
+		BOOST_CHECK_EQUAL( wformalized, L"000000010" );
+		BOOST_CHECK_NO_THROW( ShaderParser::StringUtils::Formalize( wformalized, 9, L"%.2f", 100 ) );
+		BOOST_CHECK_NE( wformalized, L"100" );
+		BOOST_CHECK_NO_THROW( ShaderParser::StringUtils::Formalize( wformalized, 9, L"%.2f", 100.0f ) );
+		BOOST_CHECK_EQUAL( wformalized, L"100.00" );
+
+		ShaderParser::CLogger::LogInfo( ShaderParser::StringStream() << "**** End TestCase_StringUtilsFormalize ****" );
+	}
+}

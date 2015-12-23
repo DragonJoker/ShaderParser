@@ -16,7 +16,9 @@
 #include "GlslParserFactory.h"
 #include "GlslParserPlugin.h"
 
-BEGIN_NAMESPACE_GLSL_PARSER
+using namespace ShaderParser;
+
+namespace GlslParser
 {
 	CPluginGlslParser::CPluginGlslParser()
 		: CPluginShaderParser( new CFactoryGlslGrammar() )
@@ -31,7 +33,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 
 	const String CPluginGlslParser::GetName() const
 	{
-		return GLSL::PLUGIN_NAME_GLSL_PARSER;
+		return PLUGIN_NAME_GLSL_PARSER;
 	}
 
 	void CPluginGlslParser::Initialise()
@@ -47,4 +49,3 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		// Empty
 	}
 }
-END_NAMESPACE_GLSL_PARSER

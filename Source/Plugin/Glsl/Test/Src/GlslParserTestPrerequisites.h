@@ -16,10 +16,6 @@
 
 #include <GlslParserPrerequisites.h>
 
-#define BEGIN_NAMESPACE_GLSL_PARSER_TEST BEGIN_NAMESPACE_GLSL_PARSER { namespace Test
-#define NAMESPACE_GLSL_PARSER_TEST NAMESPACE_GLSL_PARSER::Test
-#define END_NAMESPACE_GLSL_PARSER_TEST } END_NAMESPACE_GLSL_PARSER
-
 #ifdef BOOST_STATIC_LIB
 #   define BOOST_TEST_MAIN
 #else
@@ -39,15 +35,11 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/detail/global_typedef.hpp>
 
-BEGIN_NAMESPACE_GLSL_PARSER
+namespace GlslParserTest
 {
-	namespace Test
-	{
-		String InitialiseSingletons();
-		void LoadPlugins( const String & path );
-		void UnloadPlugins();
-	}
+	ShaderParser::String InitialiseSingletons();
+	void LoadPlugins( const ShaderParser::String & path );
+	void UnloadPlugins();
 }
-END_NAMESPACE_GLSL_PARSER
 
 #endif // ___GLSL_PARSER_TEST_PREREQUISITES_H___

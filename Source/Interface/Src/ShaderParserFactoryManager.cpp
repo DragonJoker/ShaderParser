@@ -17,7 +17,7 @@
 #include "ShaderParserFactory.h"
 #include "ShaderParserFactoryManager.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	static const String ERROR_DB_FACTORY_TYPE_NOT_FOUND = STR( "Factory type %1% not found in registered factories" );
 	static const String ERROR_DB_OBJECT_TYPE_NOT_FOUND = STR( "Object type %1% not found in registered objects" );
@@ -119,4 +119,3 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		return NULL;
 	}
 }
-END_NAMESPACE_SHADER_PARSER

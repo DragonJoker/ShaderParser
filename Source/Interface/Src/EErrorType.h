@@ -16,7 +16,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Enumeration of supported error types.
 	*/
@@ -28,6 +28,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		EErrorType_RECONNECT    //!< Reconnection request.
 	}	EErrorType;
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_ERROR_TYPE_H___

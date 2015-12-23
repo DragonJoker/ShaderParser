@@ -21,7 +21,7 @@
 
 #include <boost/filesystem.hpp>
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	namespace FileUtils
 	{
@@ -100,4 +100,3 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		}
 	}
 }
-END_NAMESPACE_SHADER_PARSER

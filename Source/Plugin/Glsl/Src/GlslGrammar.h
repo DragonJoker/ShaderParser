@@ -1,5 +1,5 @@
 /************************************************************************//**
-* @file GlslParser.h
+* @file GlslGrammar.h
 * @author Sylvain Doremus
 * @version 1.0
 * @date 11/23/2015
@@ -16,12 +16,12 @@
 
 #include <ShaderGrammar.h>
 
-BEGIN_NAMESPACE_GLSL_PARSER
+namespace GlslParser
 {
 	/** Class defining a GLSL parser.
 	*/
 	class CGlslGrammar
-		: public CShaderGrammar
+		: public ShaderParser::CShaderGrammar
 	{
 	public:
 		/** Default constructor.
@@ -37,106 +37,47 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		static CShaderGrammar * Create();
 
 	private:
-		Rule variable_identifier;
-		Rule field_selection;
-		Rule function_identifier;
-		Rule function_call_or_method;
-		Rule function_call_generic;
-		Rule function_call_header_no_parameters;
-		Rule function_call_header_with_parameters;
-		Rule function_call_header;
-		Rule function_call;
-		Rule integer_expression;
-		Rule postfix_expression_start;
-		Rule postfix_expression_rest;
-		Rule postfix_expression;
-		Rule unary_expression;
-		Rule unary_operator;
-		Rule multiplicative_expression;
-		Rule additive_expression;
-		Rule shift_expression;
-		Rule relational_expression;
-		Rule equality_expression;
-		Rule and_expression;
-		Rule exclusive_or_expression;
-		Rule inclusive_or_expression;
-		Rule inclusive_or_expression_helper;
-		Rule logical_and_expression;
-		Rule logical_xor_expression;
-		Rule logical_or_expression;
-		Rule conditional_expression;
-		Rule assignment_operator;
-		Rule assignment_expression;
-		Rule expression;
-		Rule primary_expression;
-		Rule type_name;
-		Rule constant_expression;
-		Rule type_qualifier;
-		Rule fully_specified_type;
-		Rule array_specifier;
-		Rule function_header;
-		Rule parameter_declarator;
-		Rule parameter_type_specifier;
-		Rule parameter_declaration;
-		Rule function_header_with_parameters;
-		Rule function_declarator;
-		Rule function_prototype;
-		Rule identifier_list;
-		Rule initializer;
-		Rule declaration_identifier;
-		Rule single_declaration;
-		Rule init_declarator_list;
-		Rule precision_qualifier;
-		Rule declaration;
-		Rule invariant_qualifier;
-		Rule interpolation_qualifier;
-		Rule layout_qualifier_id;
-		Rule layout_qualifier_id_list;
-		Rule layout_qualifier;
-		Rule precise_qualifier;
-		Rule type_name_list;
-		Rule storage_qualifier;
-		Rule type_specifier;
-		Rule single_type_qualifier;
-		Rule struct_declarator;
-		Rule struct_declarator_list;
-		Rule struct_declaration;
-		Rule struct_declaration_list;
-		Rule struct_specifier;
-		Rule base_type_specifier;
-		Rule vec_specifier;
-		Rule mat_specifier;
-		Rule fsampler_specifier;
-		Rule isampler_specifier;
-		Rule usampler_specifier;
-		Rule image_specifier;
-		Rule iimage_specifier;
-		Rule uimage_specifier;
-		Rule type_specifier_nonarray;
-		Rule initializer_list;
-		Rule declaration_statement;
-		Rule compound_statement_no_new_scope;
-		Rule statement_no_new_scope;
-		Rule compound_statement;
-		Rule statement;
-		Rule statement_list;
-		Rule expression_statement;
-		Rule selection_rest_statement;
-		Rule selection_statement;
-		Rule for_init_statement;
-		Rule condition;
-		Rule case_label;
-		Rule switch_statement_list;
-		Rule switch_statement;
-		Rule conditionopt;
-		Rule for_rest_statement;
-		Rule iteration_statement;
-		Rule jump_statement;
-		Rule simple_statement;
-		Rule function_definition;
-		Rule external_declaration;
+		ShaderParser::Rule type_specifier;
+		ShaderParser::Rule function_header;
+		ShaderParser::Rule parameter_declarator;
+		ShaderParser::Rule parameter_type_specifier;
+		ShaderParser::Rule parameter_declaration;
+		ShaderParser::Rule function_header_with_parameters;
+		ShaderParser::Rule function_declarator;
+		ShaderParser::Rule function_prototype;
+		ShaderParser::Rule identifier_list;
+		ShaderParser::Rule initializer;
+		ShaderParser::Rule declaration_identifier;
+		ShaderParser::Rule single_declaration;
+		ShaderParser::Rule init_declarator_list;
+		ShaderParser::Rule declaration;
+		ShaderParser::Rule initializer_list;
+		ShaderParser::Rule declaration_statement;
+		ShaderParser::Rule compound_statement_no_new_scope;
+		ShaderParser::Rule statement_no_new_scope;
+		ShaderParser::Rule compound_statement;
+		ShaderParser::Rule statement;
+		ShaderParser::Rule statement_list;
+		ShaderParser::Rule expression_statement;
+		ShaderParser::Rule selection_rest_statement;
+		ShaderParser::Rule selection_statement;
+		ShaderParser::Rule for_init_statement;
+		ShaderParser::Rule condition;
+		ShaderParser::Rule case_label;
+		ShaderParser::Rule switch_statement_list;
+		ShaderParser::Rule switch_statement;
+		ShaderParser::Rule conditionopt;
+		ShaderParser::Rule for_rest_statement;
+		ShaderParser::Rule iteration_statement;
+		ShaderParser::Rule jump_statement;
+		ShaderParser::Rule simple_statement;
+		ShaderParser::Rule function_definition;
+		ShaderParser::Rule external_declaration;
+		ShaderParser::Rule translation_unit;
+
+		std::unique_ptr< CGlslExpressionGrammar > m_expression;
+		std::unique_ptr< CGlslTypeGrammar > m_type;
 	};
 }
-END_NAMESPACE_GLSL_PARSER
 
 #endif // ___PLUGIN_GLSL_PARSER_H___

@@ -33,7 +33,7 @@
 #	define DYNLIB_UNLOAD( a ) dlclose( a )
 #endif
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	//!@remarks Static members
 #	if defined( _WIN32 )
@@ -156,5 +156,4 @@ BEGIN_NAMESPACE_SHADER_PARSER
 
 		return l_result;
 	}
-
-} END_NAMESPACE_SHADER_PARSER
+}

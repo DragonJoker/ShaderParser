@@ -1,5 +1,5 @@
 /************************************************************************//**
-* @file ShaderParser.h
+* @file ShaderGrammar.h
 * @author Sylvain Doremus
 * @version 1.0
 * @date 11/23/2015
@@ -14,7 +14,11 @@
 
 #include "EToken.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+#if defined( VOID )
+#	undef VOID
+#endif
+
+namespace ShaderParser
 {
 	/** Class defining a shader parser.
 	*/
@@ -24,7 +28,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 	public:
 		/** Default constructor.
 		*/
-		ShaderParserExport CShaderGrammar();
+		ShaderParserExport CShaderGrammar( Rule const & translation_unit );
 
 		/** Destructor.
 		*/
@@ -52,7 +56,6 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		Rule floating_constant;
 		Rule double_constant;
 		Rule bool_constant;
-		Rule translation_unit;
 
 		Rule LEFT_ANGLE;
 		Rule RIGHT_ANGLE;
@@ -113,8 +116,13 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		Rule BREAK;
 		Rule RETURN;
 
+		Rule VOID;
+		Rule FLOAT;
+		Rule DOUBLE;
+		Rule INT;
+		Rule UINT;
+		Rule BOOL;
 	};
-
-} END_NAMESPACE_SHADER_PARSER
+}
 
 #endif // ___SHADER_PARSER_H___

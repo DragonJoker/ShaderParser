@@ -18,13 +18,13 @@
 
 #include <ShaderParserFactory.h>
 
-BEGIN_NAMESPACE_GLSL_PARSER
+namespace GlslParser
 {
 	/** Glsl Parser factory class.
 		CObject factory used to manage Glsl Parser creation.
 	*/
 	class CFactoryGlslGrammar
-		: public CFactoryShaderGrammar
+		: public ShaderParser::CFactoryShaderGrammar
 	{
 	public:
 		/** Default constructor.
@@ -39,9 +39,9 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		@returns
 			String describing the factory type.
 		*/
-		inline const String GetType() const
+		inline const ShaderParser::String GetType() const
 		{
-			return GLSL::FACTORY_GLSL_PARSER;
+			return FACTORY_GLSL_PARSER;
 		}
 
 	protected:
@@ -54,6 +54,5 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		void RegisterObjectTypes();
 	};
 }
-END_NAMESPACE_GLSL_PARSER
 
 #endif // ___FACTORY_GLSL_PARSER_H___

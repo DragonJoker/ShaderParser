@@ -18,12 +18,12 @@
 
 #include <ShaderParserPlugin.h>
 
-BEGIN_NAMESPACE_GLSL_PARSER
+namespace GlslParser
 {
 	/** Class defining a generic GLSL parser plugin.
 	*/
 	class CPluginGlslParser
-		: public CPluginShaderParser
+		: public ShaderParser::CPluginShaderParser
 	{
 	public:
 		/** Default constructor.
@@ -35,7 +35,7 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		virtual ~CPluginGlslParser();
 
 		///@copydoc Database::CPlugin::GetName
-		virtual const String GetName() const;
+		virtual const ShaderParser::String GetName() const;
 
 		///@copydoc Database::CPlugin::Initialise
 		virtual void Initialise();
@@ -47,7 +47,6 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		///@copydoc Database::CParameterListInterface::AddBaseParameters
 		virtual void AddBaseParameters();
 	};
-
-} END_NAMESPACE_GLSL_PARSER
+}
 
 #endif // ___PLUGIN_GLSL_PARSER_H___

@@ -16,7 +16,9 @@
 #include "GlslParserFactory.h"
 #include "GlslGrammar.h"
 
-BEGIN_NAMESPACE_GLSL_PARSER
+using namespace ShaderParser;
+
+namespace GlslParser
 {
 	CFactoryGlslGrammar::CFactoryGlslGrammar()
 		: CFactoryShaderGrammar()
@@ -39,6 +41,4 @@ BEGIN_NAMESPACE_GLSL_PARSER
 	{
 		m_objTypes.push_back( GLSL_PARSER_TYPE );
 	}
-
 }
-END_NAMESPACE_GLSL_PARSER

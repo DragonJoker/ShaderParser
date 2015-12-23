@@ -43,23 +43,13 @@ if( BUILD_TESTS AND Boost_UNIT_TEST_FRAMEWORK_FOUND )
 		"${CMAKE_CURRENT_BINARY_DIR}/ShaderParserTestUtilities.h"
 	)
 
-	if( ${BUILD_GLSL_PLUGIN} )
-		add_dependencies( ${PROJECT_NAME} GlslParser )
-		set( ADDITIONAL_FLAGS ${ADDITIONAL_FLAGS} TESTING_PLUGIN_GLSL )
-	endif()
-
-	if( ${BUILD_HLSL_PLUGIN} )
-		add_dependencies( ${PROJECT_NAME} HlslParser )
-		set( ADDITIONAL_FLAGS ${ADDITIONAL_FLAGS} TESTING_PLUGIN_HLSL )
-	endif()
-
 	set( ADDITIONAL_FLAGS ${ADDITIONAL_FLAGS} BOOST_TEST_DYN_LINK )
 
 	if ( NOT "" STREQUAL "${ADDITIONAL_FLAGS}" )
 	  set_target_properties( ${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS "${ADDITIONAL_FLAGS}" )
 	endif ()
 
-	set_property( TARGET ${PROJECT_NAME} PROPERTY FOLDER "Test" )
+	set_property( TARGET ${PROJECT_NAME} PROPERTY FOLDER "Interface" )
 	add_target_astyle( ${PROJECT_NAME} ".h;.hpp;.inl;.cpp" )
 
 	# Adding debug test

@@ -19,7 +19,7 @@
 
 #include "EErrorType.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Allows to declare a scoped variable with an action on construction
 		and an action on destruction.
@@ -69,7 +69,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 			_clean();
 		}
 
-	private:
+private:
 		//! The clean action
 		CleanFunc _clean;
 	};
@@ -88,6 +88,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		return SBlockGuard< CleanFunc >( init, clean );
 	}
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_BLOCK_GUARD_H___

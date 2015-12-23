@@ -20,7 +20,7 @@
 #include "ShaderParserStringUtils.h"
 #include "ShaderParserFileUtils.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	class CLoggerImpl;
 
@@ -199,4 +199,3 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		}
 	}
 }
-END_NAMESPACE_SHADER_PARSER

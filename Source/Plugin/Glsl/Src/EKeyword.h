@@ -18,13 +18,13 @@
 
 #include <EToken.h>
 
-BEGIN_NAMESPACE_GLSL_PARSER
+namespace GlslParser
 {
 	/** Enumeration of supported GLSL keywords.
 	*/
 	typedef enum EKeyword
 	{
-		EKeyword_ATTRIBUTE = EToken_COUNT,
+		EKeyword_ATTRIBUTE = ShaderParser::EToken_COUNT,
 		EKeyword_CONST,
 		EKeyword_UNIFORM,
 		EKeyword_VARYING,
@@ -191,6 +191,5 @@ BEGIN_NAMESPACE_GLSL_PARSER
 		EKeyword_LOW_PRECISION,
 	}	EKeyword;
 }
-END_NAMESPACE_GLSL_PARSER
 
 #endif // ___GLSL_KEYWORD_H___

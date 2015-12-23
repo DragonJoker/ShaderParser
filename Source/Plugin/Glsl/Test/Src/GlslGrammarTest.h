@@ -16,7 +16,7 @@
 
 #include <boost/test/unit_test_suite.hpp>
 
-BEGIN_NAMESPACE_GLSL_PARSER_TEST
+namespace GlslParserTest
 {
 	/** GlslGrammar unit test class
 	*/
@@ -80,6 +80,5 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 		//!@}
 	};
 }
-END_NAMESPACE_GLSL_PARSER_TEST
 
 #endif // ___SHADER_GLSL_STRINGUTILS_TEST_H___

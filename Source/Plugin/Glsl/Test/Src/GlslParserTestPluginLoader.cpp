@@ -17,7 +17,9 @@
 
 #include <ShaderParserPluginManager.h>
 
-BEGIN_NAMESPACE_GLSL_PARSER_TEST
+using namespace ShaderParser;
+
+namespace GlslParserTest
 {
 	//***********************************************************************************************
 
@@ -146,5 +148,3 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 
 	//***********************************************************************************************
 }
-END_NAMESPACE_GLSL_PARSER_TEST
-

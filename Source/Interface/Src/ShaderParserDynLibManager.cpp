@@ -17,7 +17,7 @@
 #include "ShaderParserDynLib.h"
 #include "ShaderParserException.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	CDynLibManager::CDynLibManager()
 	{
@@ -76,5 +76,4 @@ BEGIN_NAMESPACE_SHADER_PARSER
 			l_lib.reset();
 		}
 	}
-
-} END_NAMESPACE_SHADER_PARSER
+}

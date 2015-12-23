@@ -17,6 +17,8 @@
 
 #include <ShaderParserPluginManager.h>
 
+using namespace ShaderParser;
+
 #if defined( _WIN32 ) && !defined ( __MINGW32__ ) && !defined ( STATIC_LIB )
 #	ifdef GlslParser_EXPORTS
 #		define GlslParserExport __declspec ( dllexport )
@@ -31,7 +33,7 @@
 #    define GlslParserExport
 #endif
 
-BEGIN_NAMESPACE_GLSL_PARSER
+namespace GlslParser
 {
 	CPluginGlslParser * g_plugin = NULL;
 
@@ -55,4 +57,3 @@ BEGIN_NAMESPACE_GLSL_PARSER
 	}
 #endif
 }
-END_NAMESPACE_GLSL_PARSER

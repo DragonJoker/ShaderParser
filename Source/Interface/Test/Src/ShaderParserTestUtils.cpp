@@ -28,11 +28,13 @@
 #   include <sys/wait.h>
 #endif
 
-BEGIN_NAMESPACE_SHADER_PARSER_TEST
+using namespace ShaderParser;
+
+namespace ShaderParserTest
 {
 	namespace
 	{
-		const String ERROR_UNABLE_TO_SPAWN_PROCESS      = STR( "Unable to spawn the process in asynchronous mode! System Error: " );
+		const String ERROR_UNABLE_TO_SPAWN_PROCESS = STR( "Unable to spawn the process in asynchronous mode! System Error: " );
 		const String ERROR_UNABLE_TO_FORK_CHILD_PROCESS = STR( "Unable to fork a child process in asynchronous mode! System Error: " );
 #if defined( _WIN32 )
 		typedef PROCESS_INFORMATION spawn_pid_t;
@@ -169,8 +171,4 @@ BEGIN_NAMESPACE_SHADER_PARSER_TEST
 #else
 	static const String SCRIPT_EXT = STR( ".sh" );
 #endif
-
-	static const String GLSL = STR( "GLSL" );
-	static const String HLSL = STR( "HLSL" );
 }
-END_NAMESPACE_SHADER_PARSER_TEST

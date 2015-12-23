@@ -16,7 +16,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Manager for Dynamic-loading Libraries.
 	@remarks
@@ -64,6 +64,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		std::map< String, DynLibSPtr > m_libList;
 	};
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_DYNAMIC_LIBRARY_MANAGER_H___

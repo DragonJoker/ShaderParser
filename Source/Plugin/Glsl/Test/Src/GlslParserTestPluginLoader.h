@@ -20,7 +20,7 @@
 #   include <GlslParserPlugin.h>
 #endif
 
-BEGIN_NAMESPACE_GLSL_PARSER_TEST
+namespace GlslParserTest
 {
 	/** Structure holding the needed loading informations about one plugin
 	*/
@@ -73,7 +73,7 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 	public:
 		/** Constructor
 		*/
-		CPluginConfig( bool load, const String & path, const String & name );
+		CPluginConfig( bool load, const ShaderParser::String & path, const ShaderParser::String & name );
 
 		/** Loads the plugin, if needed
 		*/
@@ -84,9 +84,9 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 		void Unload();
 
 		//! The plugins path
-		String _path;
+		ShaderParser::String _path;
 		//! The plugin name
-		String _plugin;
+		ShaderParser::String _plugin;
 	};
 #endif
 
@@ -134,7 +134,6 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 		SPluginsConfig _config;
 	};
 }
-END_NAMESPACE_GLSL_PARSER_TEST
 
 #endif //___GLSL_PARSER_TEST_STATIC_LOADER_H___
 

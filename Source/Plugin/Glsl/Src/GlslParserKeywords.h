@@ -18,18 +18,17 @@
 
 #include <ShaderParserKeywords.h>
 
-BEGIN_NAMESPACE_GLSL_PARSER
+namespace GlslParser
 {
 	/** Class listing GLSL keywords
 	*/
 	class CKeywords
-		: public CParserKeywords< EKeyword >
+		: public ShaderParser::CParserKeywords< EKeyword >
 	{
 	public:
 		CKeywords();
 		~CKeywords();
 	};
 }
-END_NAMESPACE_GLSL_PARSER
 
 #endif // ___GLSL_PARSER_KEYWORDS_H___

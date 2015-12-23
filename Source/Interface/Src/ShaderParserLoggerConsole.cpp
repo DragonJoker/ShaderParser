@@ -29,7 +29,7 @@
 #include "ShaderParserLoggerConsole.h"
 #include "ShaderParserStringUtils.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 #if defined( _MSC_VER )
 	class CMsvcConsoleInfo
@@ -520,4 +520,3 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		_console->Print( toLog, newLine );
 	}
 }
-END_NAMESPACE_SHADER_PARSER

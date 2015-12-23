@@ -20,7 +20,7 @@
 #pragma warning( push )
 #pragma warning( disable:4290 )
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Console info class, Platform dependent
 	*/
@@ -136,7 +136,6 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		virtual void Print( String const & toLog, bool newLine );
 	};
 }
-END_NAMESPACE_SHADER_PARSER
 
 #pragma warning( pop)
 

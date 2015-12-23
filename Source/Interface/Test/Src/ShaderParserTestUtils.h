@@ -20,9 +20,8 @@
 
 #include <random>
 
-BEGIN_NAMESPACE_SHADER_PARSER_TEST
+namespace ShaderParserTest
 {
 }
-END_NAMESPACE_SHADER_PARSER_TEST
 
 #endif // ___SHADER_PARSER_TEST_UTILS_H___

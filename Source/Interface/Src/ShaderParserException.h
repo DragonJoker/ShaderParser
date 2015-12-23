@@ -16,7 +16,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Static definitions of database error codes.
 	*/
@@ -155,8 +155,7 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		std::string m_callstack;
 	};
 
-#	define PARSER_EXCEPT( number, description ) throw CShaderParserException( number, description, __FUNCTION__, __FILE__, __LINE__ )
+#	define PARSER_EXCEPT( number, description ) throw ShaderParser::CShaderParserException( number, description, __FUNCTION__, __FILE__, __LINE__ )
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_EXCEPTION_SHADER_PARSER_H___

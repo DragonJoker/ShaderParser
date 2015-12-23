@@ -19,36 +19,39 @@
 
 #include <boost/test/unit_test.hpp>
 
-NAMESPACE_SHADER_PARSER::String g_path;
+using namespace ShaderParser;
+using namespace GlslParser;
 
-std::unique_ptr< NAMESPACE_GLSL_PARSER_TEST::CGlslGrammarTest > g_grammarTest;
-std::unique_ptr< NAMESPACE_GLSL_PARSER_TEST::CGlslPluginLoader > g_pluginLoader;
+String g_path;
+
+std::unique_ptr< GlslParserTest::CGlslGrammarTest > g_grammarTest;
+std::unique_ptr< GlslParserTest::CGlslPluginLoader > g_pluginLoader;
 
 void Startup( char * arg )
 {
 	g_path = arg;
-	NAMESPACE_SHADER_PARSER::StringUtils::Replace( g_path, STR( '\\' ), NAMESPACE_SHADER_PARSER::PATH_SEP );
-	NAMESPACE_SHADER_PARSER::StringUtils::Replace( g_path, STR( '/' ), NAMESPACE_SHADER_PARSER::PATH_SEP );
-	g_path = g_path.substr( 0, g_path.rfind( NAMESPACE_SHADER_PARSER::PATH_SEP ) + 1 );
+	StringUtils::Replace( g_path, STR( '\\' ), PATH_SEP );
+	StringUtils::Replace( g_path, STR( '/' ), PATH_SEP );
+	g_path = g_path.substr( 0, g_path.rfind( PATH_SEP ) + 1 );
 	srand( uint32_t( time( NULL ) ) );
 
 	// Configure logger
 #if defined( NDEBUG )
-	NAMESPACE_SHADER_PARSER::CLogger::Initialise( NAMESPACE_SHADER_PARSER::ELogType_INFO );
+	CLogger::Initialise( ELogType_INFO );
 #else
-	NAMESPACE_SHADER_PARSER::CLogger::Initialise( NAMESPACE_SHADER_PARSER::ELogType_DEBUG );
+	CLogger::Initialise( ELogType_DEBUG );
 #endif
-	NAMESPACE_SHADER_PARSER::CLogger::SetFileName( g_path + STR( "GlslParserTest.log" ) );
+	CLogger::SetFileName( g_path + STR( "GlslParserTest.log" ) );
 
-	g_grammarTest = std::make_unique< NAMESPACE_GLSL_PARSER_TEST::CGlslGrammarTest >();
-	g_pluginLoader = std::make_unique< NAMESPACE_GLSL_PARSER_TEST::CGlslPluginLoader >();
+	g_grammarTest = std::make_unique< GlslParserTest::CGlslGrammarTest >();
+	g_pluginLoader = std::make_unique< GlslParserTest::CGlslPluginLoader >();
 }
 
 void Shutdown()
 {
 	g_pluginLoader.reset();
 	g_grammarTest.reset();
-	NAMESPACE_SHADER_PARSER::CLogger::Cleanup();
+	CLogger::Cleanup();
 }
 
 #if BOOST_STATIC_LIB
@@ -82,7 +85,7 @@ int main( int argc, char * argv[] )
 	boost::unit_test::init_unit_test_func();
 
 	//!@remarks Master TS Execution.
-	boost::unit_test::unit_test_main( &NAMESPACE_GLSL_PARSER_TEST::boost_main_init_function, argc, argv );
+	boost::unit_test::unit_test_main( &GlslParserTest::boost_main_init_function, argc, argv );
 
 	Shutdown();
 
@@ -90,7 +93,7 @@ int main( int argc, char * argv[] )
 	return 0;
 }
 
-BEGIN_NAMESPACE_GLSL_PARSER_TEST
+namespace GlslParserTest
 {
 	bool boost_main_init_function()
 	{
@@ -101,10 +104,9 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 		return true;
 	}
 }
-END_NAMESPACE_GLSL_PARSER_TEST
 #endif
 
-BEGIN_NAMESPACE_GLSL_PARSER_TEST
+namespace GlslParserTest
 {
 	void Tests_Creation()
 	{
@@ -168,4 +170,3 @@ BEGIN_NAMESPACE_GLSL_PARSER_TEST
 		g_pluginLoader->Unload();
 	}
 }
-END_NAMESPACE_GLSL_PARSER_TEST

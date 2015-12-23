@@ -21,7 +21,7 @@
 #include <mutex>
 #include <atomic>
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** Implements log facilities. Create a Log with a filename, then write logs into that file
 	*/
@@ -289,6 +289,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		std::mutex _mutexThreadEnded;
 	};
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif

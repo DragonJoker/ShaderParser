@@ -18,7 +18,7 @@
 
 #include "ShaderParserException.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	const String ERROR_DUPLICATE_FUNCTION = STR( "Duplicate creator function" );
 
@@ -145,6 +145,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		MapFactory m_mapFactory;
 	};
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_FACTORY_SHADER_PARSER_H___

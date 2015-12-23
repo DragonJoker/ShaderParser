@@ -16,7 +16,7 @@
 #include <vector>
 #include <boost/test/unit_test_suite.hpp>
 
-BEGIN_NAMESPACE_SHADER_PARSER_TEST
+namespace ShaderParserTest
 {
 	typedef std::vector< boost::unit_test::test_suite * > TestVector; //!< Typedef to a vector of test_suite
 	TestVector TS_List; //!<List of all TS which will be included into the Master TS.
@@ -36,4 +36,3 @@ BEGIN_NAMESPACE_SHADER_PARSER_TEST
 	/** Build and Execute the test suite. */
 	void Tests_Creation();
 }
-END_NAMESPACE_SHADER_PARSER_TEST

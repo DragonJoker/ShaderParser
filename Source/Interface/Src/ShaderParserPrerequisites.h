@@ -14,10 +14,6 @@
 #ifndef ___SHADER_PARSER_PREREQUISITES_H___
 #define ___SHADER_PARSER_PREREQUISITES_H___
 
-#define BEGIN_NAMESPACE_SHADER_PARSER namespace ShaderParser
-#define NAMESPACE_SHADER_PARSER ShaderParser
-#define END_NAMESPACE_SHADER_PARSER
-
 #include <string>
 #include <vector>
 #include <map>
@@ -63,7 +59,7 @@ namespace ShaderParser
 {
 	namespace qi = boost::spirit::qi;
 	namespace karma = boost::spirit::karma;
-	
+
 	using TChar = char;
 	using String = std::basic_string< TChar >;
 	using StringStream = std::basic_stringstream< TChar >;

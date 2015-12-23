@@ -37,7 +37,7 @@
 #else
 #endif
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	namespace
 	{
@@ -48,63 +48,63 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		}
 
 #else
-	const int CALLS_TO_CAPTURE( 20 );
-	const int CALLS_TO_SKIP( 2 );
+		const int CALLS_TO_CAPTURE( 20 );
+		const int CALLS_TO_SKIP( 2 );
 
 #	if defined( __GNUG__ )
 
-	std::string Demangle( const std::string & p_mangled )
-	{
-		std::string l_return( p_mangled );
-		std::string sub;
-		size_t l_lindex = p_mangled.find( "(" );
-		size_t l_rindex = p_mangled.find( "+" );
-
-		if ( l_lindex != std::string::npos && l_rindex != std::string::npos )
+		std::string Demangle( const std::string & p_mangled )
 		{
-			l_return = p_mangled.substr( l_lindex + 1, l_rindex - 1 - l_lindex );
-		}
+			std::string l_return( p_mangled );
+			std::string sub;
+			size_t l_lindex = p_mangled.find( "(" );
+			size_t l_rindex = p_mangled.find( "+" );
 
-		int l_status = 0;
-		auto l_demangled = abi::__cxa_demangle( l_return.c_str(), 0, 0, &l_status );
+			if ( l_lindex != std::string::npos && l_rindex != std::string::npos )
+			{
+				l_return = p_mangled.substr( l_lindex + 1, l_rindex - 1 - l_lindex );
+			}
 
-		if ( !l_status )
-		{
-			l_return = p_mangled.substr( 0, l_lindex + 1 ) + l_demangled + p_mangled.substr( l_rindex );
-		}
-		else
-		{
-			l_return = p_mangled;
-		}
+			int l_status = 0;
+			auto l_demangled = abi::__cxa_demangle( l_return.c_str(), 0, 0, &l_status );
 
-		return l_return;
-	}
+			if ( !l_status )
+			{
+				l_return = p_mangled.substr( 0, l_lindex + 1 ) + l_demangled + p_mangled.substr( l_rindex );
+			}
+			else
+			{
+				l_return = p_mangled;
+			}
+
+			return l_return;
+		}
 
 #	elif defined( _MSC_VER )
 
-	std::string Demangle( const std::string & p_mangled )
-	{
-		char l_demangled[1024] = { 0 };
-		std::string l_return;
-
-		if ( UnDecorateSymbolName( p_mangled.c_str(), l_demangled, sizeof( l_demangled ), UNDNAME_COMPLETE ) )
+		std::string Demangle( const std::string & p_mangled )
 		{
-			l_return = l_demangled;
-		}
-		else
-		{
-			l_return = p_mangled;
-		}
+			char l_demangled[1024] = { 0 };
+			std::string l_return;
 
-		return l_return;
-	}
+			if ( UnDecorateSymbolName( p_mangled.c_str(), l_demangled, sizeof( l_demangled ), UNDNAME_COMPLETE ) )
+			{
+				l_return = l_demangled;
+			}
+			else
+			{
+				l_return = p_mangled;
+			}
+
+			return l_return;
+		}
 
 #	else
 
-	std::string Demangle( const std::string & name )
-	{
-		return name;
-	}
+		std::string Demangle( const std::string & name )
+		{
+			return name;
+		}
 
 #	endif
 #	if !defined( _WIN32 )
@@ -499,4 +499,3 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		return m_what.c_str();
 	}
 }
-END_NAMESPACE_SHADER_PARSER

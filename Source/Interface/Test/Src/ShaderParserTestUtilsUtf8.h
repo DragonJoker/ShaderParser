@@ -21,7 +21,7 @@
 #include <ShaderParserStatement.h>
 #include <ShaderParserQuery.h>
 
-BEGIN_NAMESPACE_SHADER_PARSER_TEST
+namespace ShaderParserTest
 {
 	namespace ShaderParserUtilsUtf8
 	{
@@ -209,6 +209,5 @@ BEGIN_NAMESPACE_SHADER_PARSER_TEST
 		}
 	}
 }
-END_NAMESPACE_SHADER_PARSER_TEST
 
 #endif // ___SHADER_PARSER_TEST_MYSQL_UTILS_UTF8_H___

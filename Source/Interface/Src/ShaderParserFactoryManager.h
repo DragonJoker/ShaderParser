@@ -17,7 +17,7 @@
 
 #include "ShaderParserPrerequisites.h"
 
-BEGIN_NAMESPACE_SHADER_PARSER
+namespace ShaderParser
 {
 	/** This manager manages factory objects.
 		This class is not only managing the objects themselves,
@@ -92,6 +92,5 @@ BEGIN_NAMESPACE_SHADER_PARSER
 		std::map< String, String > m_objectFactories;
 	};
 }
-END_NAMESPACE_SHADER_PARSER
 
 #endif // ___SHADER_PARSER_FACTORY_MANAGER_H___
