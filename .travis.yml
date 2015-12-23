@@ -8,6 +8,7 @@ addons:
     packages:
       - cmake
       - g++-4.9
+      - boost
 before_script:
   - export CXX="g++-4.9"
   - export CC="gcc-4.9"
@@ -21,4 +22,5 @@ install: true
 branches:
   only:
     - master
+    - remove_left_recursion
 sudo: false
