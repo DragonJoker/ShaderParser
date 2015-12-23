@@ -7,11 +7,6 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - cmake
-      - libfreeimage-dev
-      - libfreetype6-dev
-      - libzip-dev
-      - zlib1g-dev
-      - libglm-dev
       - g++-4.9
 before_script:
   - export CXX="g++-4.9"
@@ -19,12 +14,11 @@ before_script:
 script:
   - mkdir -p build/release
   - cd build/release
-  - cmake -DCMAKE_BUILD_TYPE=Release ../../source -DPROJECTS_USE_PRECOMPILED_HEADERS=OFF -DCASTOR_BUILD_TEST=ON -DCASTOR_BUILD_BINDING_PYCASTOR3D=OFF -DCASTOR_BUILD_BINDING_COM=OFF -DCASTOR_BUILD_BINDING_PYGUICOMMON=OFF -DCASTOR_BUILD_SAMPLE_GUICOMMON=OFF -DCASTOR_BUILD_SAMPLE_CASTOR_VIEWER=OFF -DCASTOR_BUILD_SAMPLE_OCEAN_LIGHTING=OFF -DCASTOR_BUILD_SAMPLE_CASTOR_SHAPE=OFF -DCASTOR_FORCE_ALL_IMPORTERS=ON
+  - cmake -DCMAKE_BUILD_TYPE=Release ../../source -DPROJECTS_USE_PRECOMPILED_HEADERS=OFF -DBUILD_TESTS=ON -DBUILD_HLSL_PLUGIN=OFF
   - make -j2
   - make test
 install: true
 branches:
   only:
     - master
-    - development
 sudo: false
