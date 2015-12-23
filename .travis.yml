@@ -14,7 +14,7 @@ before_script:
 script:
   - mkdir -p build/release
   - cd build/release
-  - cmake -DCMAKE_BUILD_TYPE=Release ../../source -DPROJECTS_USE_PRECOMPILED_HEADERS=OFF -DBUILD_TESTS=ON -DBUILD_HLSL_PLUGIN=OFF
+  - cmake -DCMAKE_BUILD_TYPE=Release ../../Source -DPROJECTS_USE_PRECOMPILED_HEADERS=OFF -DBUILD_TESTS=ON -DBUILD_HLSL_PLUGIN=OFF
   - make -j2
   - make test
 install: true
